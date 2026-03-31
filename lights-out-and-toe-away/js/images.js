@@ -3,29 +3,29 @@
 // Folder structure: public/assets/media/{category}/
 
 // ── TEAMS (21 team categories) ────────────────────────────────────────
-const IMG_TEAM_FERRARI        = "/lights-out-and-toe-away/public/teams/ferrari.jpg";
-const IMG_TEAM_MERCEDES       = "/lights-out-and-toe-away/public/teams/mercedes.jpg";
-const IMG_TEAM_REDBULL        = "/lights-out-and-toe-away/public/teams/red_bull.jpg";
-const IMG_TEAM_MCLAREN        = "/lights-out-and-toe-away/public/teams/mclaren.jpg";
-const IMG_TEAM_WILLIAMS       = "/lights-out-and-toe-away/public/teams/williams.jpg";
+const IMG_TEAM_SAUBER         = "/lights-out-and-toe-away/public/teams/sauber.jpg";
+const IMG_TEAM_ALFA_ROMEO     = "/lights-out-and-toe-away/public/teams/alfa_romeo.jpg";
+const IMG_TEAM_MINARDI        = "/lights-out-and-toe-away/public/teams/minardi.jpg";
+const IMG_TEAM_TORO_ROSSO     = "/lights-out-and-toe-away/public/teams/toro_rosso.jpg";
+const IMG_TEAM_BENETTON       = "/lights-out-and-toe-away/public/teams/benetton.jpg";
+const IMG_TEAM_LOTUS          = "/lights-out-and-toe-away/public/teams/lotus.jpg";
 const IMG_TEAM_RENAULT        = "/lights-out-and-toe-away/public/teams/renault.jpg";
 const IMG_TEAM_ALPINE         = "/lights-out-and-toe-away/public/teams/alpine.jpg";
 const IMG_TEAM_ALPHATAURI     = "/lights-out-and-toe-away/public/teams/alphatauri.jpg";
-const IMG_TEAM_SAUBER         = "/lights-out-and-toe-away/public/teams/sauber.jpg";
-const IMG_TEAM_HAAS           = "/lights-out-and-toe-away/public/teams/haas.jpg";
-const IMG_TEAM_LOTUS          = "/lights-out-and-toe-away/public/teams/lotus.jpg";
-const IMG_TEAM_JORDAN         = "/lights-out-and-toe-away/public/teams/jordan.jpg";
-const IMG_TEAM_BENETTON       = "/lights-out-and-toe-away/public/teams/benetton.jpg";
-const IMG_TEAM_BRABHAM        = "/lights-out-and-toe-away/public/teams/brabham.jpg";
 const IMG_TEAM_TYRRELL        = "/lights-out-and-toe-away/public/teams/tyrrell.jpg";
 const IMG_TEAM_BRAWN          = "/lights-out-and-toe-away/public/teams/brawn.jpg";
+const IMG_TEAM_MERCEDES       = "/lights-out-and-toe-away/public/teams/mercedes.jpg";
+const IMG_TEAM_FERRARI        = "/lights-out-and-toe-away/public/teams/ferrari.jpg";
+const IMG_TEAM_MCLAREN        = "/lights-out-and-toe-away/public/teams/mclaren.jpg";
+const IMG_TEAM_WILLIAMS       = "/lights-out-and-toe-away/public/teams/williams.jpg";
+const IMG_TEAM_REDBULL        = "/lights-out-and-toe-away/public/teams/red_bull.jpg";
+const IMG_TEAM_JORDAN         = "/lights-out-and-toe-away/public/teams/jordan.jpg";
 const IMG_TEAM_FORCE_INDIA    = "/lights-out-and-toe-away/public/teams/force_india.jpg";
-const IMG_TEAM_BMW            = "/lights-out-and-toe-away/public/teams/bmw.jpg";
-const IMG_TEAM_TOYOTA         = "/lights-out-and-toe-away/public/teams/toyota.jpg";
 const IMG_TEAM_ASTON          = "/lights-out-and-toe-away/public/teams/aston_martin.jpg";
-const IMG_TEAM_MINARDI        = "/lights-out-and-toe-away/public/teams/minardi.jpg";
+const IMG_TEAM_HAAS           = "/lights-out-and-toe-away/public/teams/haas.jpg";
+const IMG_TEAM_BRABHAM        = "/lights-out-and-toe-away/public/teams/brabham.jpg";
 
-// ── NATIONALITIES (13 nationality flag categories) ────────────────────
+// ── NATIONALITIES (20 nationality flag categories) ────────────────────
 const IMG_FLAG_BRITISH        = "/lights-out-and-toe-away/public/nationalities/british.jpg";
 const IMG_FLAG_GERMAN         = "/lights-out-and-toe-away/public/nationalities/german.jpg";
 const IMG_FLAG_BRAZILIAN      = "/lights-out-and-toe-away/public/nationalities/brazilian.jpg";
@@ -39,8 +39,15 @@ const IMG_FLAG_AUSTRIAN       = "/lights-out-and-toe-away/public/nationalities/a
 const IMG_FLAG_CANADIAN       = "/lights-out-and-toe-away/public/nationalities/canadian.jpg";
 const IMG_FLAG_MEXICAN        = "/lights-out-and-toe-away/public/nationalities/mexican.jpg";
 const IMG_FLAG_MONEGASQUE     = "/lights-out-and-toe-away/public/nationalities/monegasque.jpg";
+const IMG_FLAG_BELGIAN        = "/lights-out-and-toe-away/public/nationalities/belgian.jpg";
+const IMG_FLAG_NEW_ZEALAND    = "/lights-out-and-toe-away/public/nationalities/new_zealand.jpg";
+const IMG_FLAG_RUSSIAN        = "/lights-out-and-toe-away/public/nationalities/russian.jpg";
+const IMG_FLAG_AMERICAN       = "/lights-out-and-toe-away/public/nationalities/american.jpg";
+const IMG_FLAG_SWEDISH        = "/lights-out-and-toe-away/public/nationalities/swedish.jpg";
+const IMG_FLAG_JAPANESE       = "/lights-out-and-toe-away/public/nationalities/japanese.jpg";
+const IMG_FLAG_SWISS          = "/lights-out-and-toe-away/public/nationalities/swiss.jpg";
 
-// ── CIRCUITS (30 circuit categories) ─────────────────────────────────
+// ── CIRCUITS (29 circuit categories) ─────────────────────────────────
 const IMG_CIRC_MONACO         = "/lights-out-and-toe-away/public/circuits/circuit_monaco.jpg";
 const IMG_CIRC_BELGIUM        = "/lights-out-and-toe-away/public/circuits/circuit_belgium.jpg";
 const IMG_CIRC_ITALY          = "/lights-out-and-toe-away/public/circuits/circuit_italy.jpg";
@@ -59,8 +66,8 @@ const IMG_CIRC_AUSTRIA        = "/lights-out-and-toe-away/public/circuits/circui
 const IMG_CIRC_HUNGARY        = "/lights-out-and-toe-away/public/circuits/circuit_hungary.jpg";
 const IMG_CIRC_AUSTRALIA      = "/lights-out-and-toe-away/public/circuits/circuit_australia.jpg";
 const IMG_CIRC_MALAYSIA       = "/lights-out-and-toe-away/public/circuits/circuit_malaysia.jpg";
-const IMG_CIRC_GERMANY        = "/lights-out-and-toe-away/public/circuits/circuit_germany.jpg";
 const IMG_CIRC_GERMANY_FLAG   = "/lights-out-and-toe-away/public/circuits/circuit_germany_flag.jpg";
+const IMG_CIRC_GERMANY        = "/lights-out-and-toe-away/public/circuits/circuit_germany.jpg";
 const IMG_CIRC_PORTUGAL       = "/lights-out-and-toe-away/public/circuits/circuit_portugal.jpg";
 const IMG_CIRC_ARGENTINA      = "/lights-out-and-toe-away/public/circuits/circuit_argentina.jpg";
 const IMG_CIRC_CHINA          = "/lights-out-and-toe-away/public/circuits/circuit_china.jpg";
@@ -70,34 +77,42 @@ const IMG_CIRC_GREAT_BRITAIN_FLAG = "/lights-out-and-toe-away/public/circuits/ci
 const IMG_CIRC_USA_FLAG       = "/lights-out-and-toe-away/public/circuits/circuit_usa_flag.jpg";
 const IMG_CIRC_FRANCE         = "/lights-out-and-toe-away/public/circuits/circuit_france.jpg";
 const IMG_CIRC_MEXICO         = "/lights-out-and-toe-away/public/circuits/circuit_mexico.jpg";
-const IMG_CIRC_FINLAND        = "/lights-out-and-toe-away/public/circuits/circuit_finland.jpg";
 
-// ── TEAM PRINCIPALS (13 boss categories) ─────────────────────────────
-const IMG_TP_ROSS_BRAWN       = "/lights-out-and-toe-away/public/team principals/ross_brawn.jpg";
-const IMG_TP_TOTO_WOLFF       = "/lights-out-and-toe-away/public/team principals/toto_wolff.jpg";
-const IMG_TP_CHRISTIAN_HORNER = "/lights-out-and-toe-away/public/team principals/christian_horner.jpg";
-const IMG_TP_FLAVIO_BRIATORE  = "/lights-out-and-toe-away/public/team principals/flavio_briatore.jpg";
-const IMG_TP_RON_DENNIS       = "/lights-out-and-toe-away/public/team principals/ron_dennis.jpg";
-const IMG_TP_FRANK_WILLIAMS   = "/lights-out-and-toe-away/public/team principals/frank_williams.jpg";
-const IMG_TP_FREDERIC_VASSEUR = "/lights-out-and-toe-away/public/team principals/frederic_vasseur.jpg";
-const IMG_TP_EDDIE_JORDAN     = "/lights-out-and-toe-away/public/team principals/eddie_jordan.jpg";
-const IMG_TP_JEAN_TODT        = "/lights-out-and-toe-away/public/team principals/jean_todt.jpg";
-const IMG_TP_FRANZ_TOST       = "/lights-out-and-toe-away/public/team principals/franz_tost.jpg";
-const IMG_TP_COLIN_CHAPMAN    = "/lights-out-and-toe-away/public/team principals/colin_chapman.jpg";
-const IMG_TP_GUENTHER_STEINER = "/lights-out-and-toe-away/public/team principals/guenther_steiner.jpg";
-const IMG_TP_ZAK_BROWN        = "/lights-out-and-toe-away/public/team principals/zak_brown.jpg";
+// ── TEAM PRINCIPALS (17 boss categories) ─────────────────────────────
+const IMG_TP_ROSS_BRAWN        = "/lights-out-and-toe-away/public/team principals/ross_brawn.jpg";
+const IMG_TP_TOTO_WOLFF        = "/lights-out-and-toe-away/public/team principals/toto_wolff.jpg";
+const IMG_TP_CHRISTIAN_HORNER  = "/lights-out-and-toe-away/public/team principals/christian_horner.jpg";
+const IMG_TP_FLAVIO_BRIATORE   = "/lights-out-and-toe-away/public/team principals/flavio_briatore.jpg";
+const IMG_TP_RON_DENNIS        = "/lights-out-and-toe-away/public/team principals/ron_dennis.jpg";
+const IMG_TP_FRANK_WILLIAMS    = "/lights-out-and-toe-away/public/team principals/frank_williams.jpg";
+const IMG_TP_FREDERIC_VASSEUR  = "/lights-out-and-toe-away/public/team principals/frederic_vasseur.jpg";
+const IMG_TP_EDDIE_JORDAN      = "/lights-out-and-toe-away/public/team principals/eddie_jordan.jpg";
+const IMG_TP_JEAN_TODT         = "/lights-out-and-toe-away/public/team principals/jean_todt.jpg";
+const IMG_TP_FRANZ_TOST        = "/lights-out-and-toe-away/public/team principals/franz_tost.jpg";
+const IMG_TP_COLIN_CHAPMAN     = "/lights-out-and-toe-away/public/team principals/colin_chapman.jpg";
+const IMG_TP_GUENTHER_STEINER  = "/lights-out-and-toe-away/public/team principals/guenther_steiner.jpg";
+const IMG_TP_MARCO_PICCININI   = "/lights-out-and-toe-away/public/team principals/marco_piccinini.jpg";
+const IMG_TP_CLAIRE_WILLIAMS   = "/lights-out-and-toe-away/public/team principals/claire_williams.jpg";
+const IMG_TP_BERNIE_ECCLESTONE = "/lights-out-and-toe-away/public/team principals/bernie_ecclestone.jpg";
+const IMG_TP_KEN_TYRRELL       = "/lights-out-and-toe-away/public/team principals/ken_tyrrell.jpg";
+const IMG_TP_GIANCARLO_MINARDI = "/lights-out-and-toe-away/public/team principals/giancarlo_minardi.jpg";
 
-// ── TEAMMATES (10 driver portrait categories) ─────────────────────────
-const IMG_SENNA               = "/lights-out-and-toe-away/public/teammates/senna.jpg";
-const IMG_LECLERC             = "/lights-out-and-toe-away/public/teammates/leclerc.jpg";
-const IMG_RICCIARDO           = "/lights-out-and-toe-away/public/teammates/ricciardo.jpg";
+// ── TEAMMATES (15 driver portrait categories) ─────────────────────────
+const IMG_GRAHAM_HILL         = "/lights-out-and-toe-away/public/teammates/graham_hill.jpg";
 const IMG_ALONSO              = "/lights-out-and-toe-away/public/teammates/alonso.jpg";
 const IMG_HAMILTON            = "/lights-out-and-toe-away/public/teammates/hamilton.jpg";
-const IMG_VERSTAPPEN          = "/lights-out-and-toe-away/public/teammates/verstappen.jpg";
 const IMG_SCHUMACHER          = "/lights-out-and-toe-away/public/teammates/schumacher.jpg";
-const IMG_PIQUET               = "/lights-out-and-toe-away/public/teammates/piquet.jpg";
+const IMG_DE_CESARIS          = "/lights-out-and-toe-away/public/teammates/de_cesaris.jpg";
+const IMG_HULKENBERG          = "/lights-out-and-toe-away/public/teammates/hulkenberg.jpg";
 const IMG_BARRICHELLO         = "/lights-out-and-toe-away/public/teammates/barrichello.jpg";
+const IMG_PIQUET              = "/lights-out-and-toe-away/public/teammates/piquet.jpg";
+const IMG_PATRESE             = "/lights-out-and-toe-away/public/teammates/patrese.jpg";
+const IMG_VERSTAPPEN          = "/lights-out-and-toe-away/public/teammates/verstappen.jpg";
 const IMG_VETTEL              = "/lights-out-and-toe-away/public/teammates/vettel.jpg";
+const IMG_RICCIARDO           = "/lights-out-and-toe-away/public/teammates/ricciardo.jpg";
+const IMG_SENNA               = "/lights-out-and-toe-away/public/teammates/senna.jpg";
+const IMG_PROST               = "/lights-out-and-toe-away/public/teammates/prost.jpg";
+const IMG_MANSELL             = "/lights-out-and-toe-away/public/teammates/mansell.jpg";
 
 // ── WILDCARDS (trophies + eras + born decades + continents) ──────────
 // Trophy categories
@@ -105,6 +120,7 @@ const IMG_WILD_CHAMPIONS      = "/lights-out-and-toe-away/public/wildcards/champ
 const IMG_WILD_TITLES         = "/lights-out-and-toe-away/public/wildcards/titles.jpg";
 const IMG_WILD_RACE_WINS      = "/lights-out-and-toe-away/public/wildcards/race_wins.jpg";
 const IMG_WILD_FASTEST_LAP    = "/lights-out-and-toe-away/public/wildcards/fastest_lap.jpg";
+const IMG_WILD_POLE           = "/lights-out-and-toe-away/public/wildcards/pole_position.jpg";
 const IMG_WILD_TEAMS          = "/lights-out-and-toe-away/public/wildcards/teams_trophy.jpg";
 const IMG_WILD_CIRCUITS       = "/lights-out-and-toe-away/public/wildcards/circuits_trophy.jpg";
 const IMG_ERA_GRAND_SLAM      = "/lights-out-and-toe-away/public/wildcards/era_grand_slam.jpg";
@@ -128,4 +144,5 @@ const IMG_CONT_EUROPE         = "/lights-out-and-toe-away/public/wildcards/conti
 const IMG_CONT_NORTH_AMERICA  = "/lights-out-and-toe-away/public/wildcards/continent_north_america.png";
 const IMG_CONT_SOUTH_AMERICA  = "/lights-out-and-toe-away/public/wildcards/continent_south_america.png";
 const IMG_CONT_ASIA           = "/lights-out-and-toe-away/public/wildcards/continent_asia.png";
+const IMG_CONT_AFRICA         = "/lights-out-and-toe-away/public/wildcards/continent_africa.png";
 const IMG_CONT_WORLD          = "/lights-out-and-toe-away/public/wildcards/continent_world.png";
