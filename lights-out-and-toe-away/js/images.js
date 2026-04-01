@@ -79,23 +79,23 @@ const IMG_CIRC_FRANCE         = "/lights-out-and-toe-away/public/circuits/circui
 const IMG_CIRC_MEXICO         = "/lights-out-and-toe-away/public/circuits/circuit_mexico.jpg";
 
 // ── TEAM PRINCIPALS (17 boss categories) ─────────────────────────────
-const IMG_TP_ROSS_BRAWN        = "/lights-out-and-toe-away/public/team principals/ross_brawn.jpg";
-const IMG_TP_TOTO_WOLFF        = "/lights-out-and-toe-away/public/team principals/toto_wolff.jpg";
-const IMG_TP_CHRISTIAN_HORNER  = "/lights-out-and-toe-away/public/team principals/christian_horner.jpg";
-const IMG_TP_FLAVIO_BRIATORE   = "/lights-out-and-toe-away/public/team principals/flavio_briatore.jpg";
-const IMG_TP_RON_DENNIS        = "/lights-out-and-toe-away/public/team principals/ron_dennis.jpg";
-const IMG_TP_FRANK_WILLIAMS    = "/lights-out-and-toe-away/public/team principals/frank_williams.jpg";
-const IMG_TP_FREDERIC_VASSEUR  = "/lights-out-and-toe-away/public/team principals/frederic_vasseur.jpg";
-const IMG_TP_EDDIE_JORDAN      = "/lights-out-and-toe-away/public/team principals/eddie_jordan.jpg";
-const IMG_TP_JEAN_TODT         = "/lights-out-and-toe-away/public/team principals/jean_todt.jpg";
-const IMG_TP_FRANZ_TOST        = "/lights-out-and-toe-away/public/team principals/franz_tost.jpg";
-const IMG_TP_COLIN_CHAPMAN     = "/lights-out-and-toe-away/public/team principals/colin_chapman.jpg";
-const IMG_TP_GUENTHER_STEINER  = "/lights-out-and-toe-away/public/team principals/guenther_steiner.jpg";
-const IMG_TP_MARCO_PICCININI   = "/lights-out-and-toe-away/public/team principals/marco_piccinini.jpg";
-const IMG_TP_CLAIRE_WILLIAMS   = "/lights-out-and-toe-away/public/team principals/claire_williams.jpg";
-const IMG_TP_BERNIE_ECCLESTONE = "/lights-out-and-toe-away/public/team principals/bernie_ecclestone.jpg";
-const IMG_TP_KEN_TYRRELL       = "/lights-out-and-toe-away/public/team principals/ken_tyrrell.jpg";
-const IMG_TP_GIANCARLO_MINARDI = "/lights-out-and-toe-away/public/team principals/giancarlo_minardi.jpg";
+const IMG_TP_ROSS_BRAWN        = "/lights-out-and-toe-away/public/team principals/ross_brawn.png";
+const IMG_TP_TOTO_WOLFF        = "/lights-out-and-toe-away/public/team principals/toto_wolff.png";
+const IMG_TP_CHRISTIAN_HORNER  = "/lights-out-and-toe-away/public/team principals/christian_horner.png";
+const IMG_TP_FLAVIO_BRIATORE   = "/lights-out-and-toe-away/public/team principals/flavio_briatore.png";
+const IMG_TP_RON_DENNIS        = "/lights-out-and-toe-away/public/team principals/ron_dennis.png";
+const IMG_TP_FRANK_WILLIAMS    = "/lights-out-and-toe-away/public/team principals/sir_frank_williams.png";
+const IMG_TP_FREDERIC_VASSEUR  = "/lights-out-and-toe-away/public/team principals/fred_vasseur.png";
+const IMG_TP_EDDIE_JORDAN      = "/lights-out-and-toe-away/public/team principals/eddie_jordan.png";
+const IMG_TP_JEAN_TODT         = "/lights-out-and-toe-away/public/team principals/jean_todt.png";
+const IMG_TP_FRANZ_TOST        = "/lights-out-and-toe-away/public/team principals/franz_tost.png";
+const IMG_TP_COLIN_CHAPMAN     = "/lights-out-and-toe-away/public/team principals/colin_chapman.png";
+const IMG_TP_GUENTHER_STEINER  = "/lights-out-and-toe-away/public/team principals/guenther_steiner.png";
+const IMG_TP_MARCO_PICCININI   = "/lights-out-and-toe-away/public/team principals/marco_piccinini.png";
+const IMG_TP_CLAIRE_WILLIAMS   = "/lights-out-and-toe-away/public/team principals/claire_williams.png";
+const IMG_TP_BERNIE_ECCLESTONE = "/lights-out-and-toe-away/public/team principals/bernie_ecclestone.png";
+const IMG_TP_KEN_TYRRELL       = "/lights-out-and-toe-away/public/team principals/ken_tyrell.png";
+const IMG_TP_GIANCARLO_MINARDI = "/lights-out-and-toe-away/public/team principals/giancarlo_minardi.png";
 
 // ── TEAMMATES (15 driver portrait categories) ─────────────────────────
 const IMG_GRAHAM_HILL         = "/lights-out-and-toe-away/public/teammates/graham_hill.jpg";
