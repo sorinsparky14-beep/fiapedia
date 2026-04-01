@@ -98,21 +98,21 @@ const IMG_TP_KEN_TYRRELL       = "/lights-out-and-toe-away/public/team principal
 const IMG_TP_GIANCARLO_MINARDI = "/lights-out-and-toe-away/public/team principals/giancarlo_minardi.png";
 
 // ── TEAMMATES (15 driver portrait categories) ─────────────────────────
-const IMG_GRAHAM_HILL         = "/lights-out-and-toe-away/public/teammates/graham_hill.jpg";
-const IMG_ALONSO              = "/lights-out-and-toe-away/public/teammates/alonso.jpg";
-const IMG_HAMILTON            = "/lights-out-and-toe-away/public/teammates/hamilton.jpg";
-const IMG_SCHUMACHER          = "/lights-out-and-toe-away/public/teammates/schumacher.jpg";
-const IMG_DE_CESARIS          = "/lights-out-and-toe-away/public/teammates/de_cesaris.jpg";
-const IMG_HULKENBERG          = "/lights-out-and-toe-away/public/teammates/hulkenberg.jpg";
-const IMG_BARRICHELLO         = "/lights-out-and-toe-away/public/teammates/barrichello.jpg";
-const IMG_PIQUET              = "/lights-out-and-toe-away/public/teammates/piquet.jpg";
-const IMG_PATRESE             = "/lights-out-and-toe-away/public/teammates/patrese.jpg";
-const IMG_VERSTAPPEN          = "/lights-out-and-toe-away/public/teammates/verstappen.jpg";
-const IMG_VETTEL              = "/lights-out-and-toe-away/public/teammates/vettel.jpg";
-const IMG_RICCIARDO           = "/lights-out-and-toe-away/public/teammates/ricciardo.jpg";
-const IMG_SENNA               = "/lights-out-and-toe-away/public/teammates/senna.jpg";
-const IMG_PROST               = "/lights-out-and-toe-away/public/teammates/prost.jpg";
-const IMG_MANSELL             = "/lights-out-and-toe-away/public/teammates/mansell.jpg";
+const IMG_GRAHAM_HILL         = "/lights-out-and-toe-away/public/teammates/graham_hill.png";
+const IMG_ALONSO              = "/lights-out-and-toe-away/public/teammates/fernando_alonso.png";
+const IMG_HAMILTON            = "/lights-out-and-toe-away/public/teammates/lewis_hamilton.png";
+const IMG_SCHUMACHER          = "/lights-out-and-toe-away/public/teammates/michael_schumacher.png";
+const IMG_DE_CESARIS          = "/lights-out-and-toe-away/public/teammates/andrea_de_cesaris.png";
+const IMG_HULKENBERG          = "/lights-out-and-toe-away/public/teammates/nico_hulkenberg.png";
+const IMG_BARRICHELLO         = "/lights-out-and-toe-away/public/teammates/rubens_barrichello.png";
+const IMG_PIQUET              = "/lights-out-and-toe-away/public/teammates/nelson_piquet.png";
+const IMG_PATRESE             = "/lights-out-and-toe-away/public/teammates/riccardo_patrese.png";
+const IMG_VERSTAPPEN          = "/lights-out-and-toe-away/public/teammates/max_verstappen.png";
+const IMG_VETTEL              = "/lights-out-and-toe-away/public/teammates/sebastian_vettel.png";
+const IMG_RICCIARDO           = "/lights-out-and-toe-away/public/teammates/daniel_ricciardo.png";
+const IMG_SENNA               = "/lights-out-and-toe-away/public/teammates/ayrton_senna.png";
+const IMG_PROST               = "/lights-out-and-toe-away/public/teammates/alain_prost.png";
+const IMG_MANSELL             = "/lights-out-and-toe-away/public/teammates/nigel_mansell.png";
 
 // ── WILDCARDS (trophies + eras + born decades + continents) ──────────
 // Trophy categories
