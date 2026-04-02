@@ -143,7 +143,6 @@ const CATS = [
   {id:"top2t",g:"wild",label:"Raced in\nTop 2 Teams",img:IMG_WILD_TEAMS,flagImg:true,badge:"b-wild",check:d=>{const tops=["Ferrari","McLaren"];return tops.every(t=>d.teams.includes(t));}},
   {id:"wc2circ",g:"wild",label:"Wins at\n2+ Top 5 Circuits",img:IMG_WILD_CIRCUITS,flagImg:true,badge:"b-wild",check:d=>{const top5=["monza","monte_carlo","silverstone","spa","interlagos"];return top5.filter(c=>(d.circuits[c]||0)>=1).length>=2;}},
   {id:"wc3circ",g:"wild",label:"Wins at\n2+ Top 3 Circuits",img:IMG_WILD_CIRCUITS,flagImg:true,badge:"b-wild",check:d=>{const top3=["monza","monte_carlo","silverstone"];return top3.filter(c=>(d.circuits[c]||0)>=1).length>=2;}},
-  {id:"fl10",g:"wild",label:"10+ Career\nFastest Laps",img:IMG_WILD_FASTEST_LAP,flagImg:true,badge:"b-wild",check:d=>d.fastLaps>=10},
   // TEAMMATE PORTRAITS
   {id:"Graham Hill",g:"tm",label:"Teammate\nof Graham Hill",img:IMG_GRAHAM_HILL,badge:"b-tm",check:d=>{const n=d.name.toLowerCase();return ["innes ireland","jo bonnier","dan gurney","tony brooks","richie ginther","jackie stewart","jim clark","mario andretti","carlos reutemann","jochen rindt","wilson fittipaldi"].includes(n);}},
   {id:"Fernando Alonso",g:"tm",label:"Teammate\nof Fernando Alonso",img:IMG_ALONSO,badge:"b-tm",check:d=>{const n=d.name.toLowerCase();return ["jarno trulli","jacques villeneuve","giancarlo fisichella","lewis hamilton","romain grosjean","felipe massa","kimi räikkönen","jenson button","stoffel vandoorne","lando norris","esteban ocon","lance stroll","nelson piquet jr.","alex yoong"].includes(n);}},
@@ -176,19 +175,67 @@ function checkWin(board){
 
 // ── GRID BUILDER ────────────────────────────────────────────────────────────
 function countValid(a,b){return DB.filter(d=>a.check(d)&&b.check(d)).length;}
-function buildGrid(){
-  const cats=[...CATS];
-  for(let t=0;t<1000;t++){
-    const sh=[...cats].sort(()=>Math.random()-.5);
-    const rows=sh.slice(0,3),cols=sh.slice(3,6);
-    let ok=true;
-    for(const r of rows){for(const c of cols){
-      if(r.id===c.id||r.g===c.g){ok=false;break;}
-      if(countValid(r,c)<2){ok=false;break;}
-    }if(!ok)break;}
-    if(ok)return{rows,cols};
+
+// Pre-compute all valid pairs (>=2 drivers) between different groups — cached
+let _pairIdx=null;
+function getPairIndex(){
+  if(_pairIdx) return _pairIdx;
+  _pairIdx={};
+  for(let i=0;i<CATS.length;i++){
+    for(let j=0;j<CATS.length;j++){
+      if(i===j||CATS[i].g===CATS[j].g) continue;
+      if(countValid(CATS[i],CATS[j])>=2){
+        if(!_pairIdx[i]) _pairIdx[i]=[];
+        _pairIdx[i].push(j);
+      }
+    }
   }
-  return{rows:[CATS[0],CATS[20],CATS[33]],cols:[CATS[3],CATS[26],CATS[62]]};
+  return _pairIdx;
+}
+
+function shuffle(arr){return arr.sort(()=>Math.random()-.5);}
+
+function buildGrid(){
+  const pairIdx=getPairIndex();
+
+  for(let t=0;t<2000;t++){
+    const rowCands=shuffle(Object.keys(pairIdx).map(Number)).slice(0,30);
+    for(let ri=0;ri<rowCands.length-2;ri++){
+      const r0=rowCands[ri];
+      const r1cands=rowCands.slice(ri+1).filter(r=>CATS[r].g!==CATS[r0].g);
+      if(!r1cands.length) continue;
+      const r1=r1cands[Math.floor(Math.random()*r1cands.length)];
+      const r2cands=rowCands.filter(r=>r!==r0&&r!==r1&&CATS[r].g!==CATS[r0].g&&CATS[r].g!==CATS[r1].g);
+      if(!r2cands.length) continue;
+      const r2=r2cands[Math.floor(Math.random()*r2cands.length)];
+
+      const validForR0=new Set(pairIdx[r0]||[]);
+      const validForR1=new Set(pairIdx[r1]||[]);
+      const validForR2=new Set(pairIdx[r2]||[]);
+      const rowIdxSet=new Set([r0,r1,r2]);
+      const rowGroups=new Set([CATS[r0].g,CATS[r1].g,CATS[r2].g]);
+
+      const colCands=[];
+      for(let ci=0;ci<CATS.length;ci++){
+        if(rowIdxSet.has(ci)) continue;
+        if(rowGroups.has(CATS[ci].g)) continue;
+        if(validForR0.has(ci)&&validForR1.has(ci)&&validForR2.has(ci)) colCands.push(ci);
+      }
+      if(colCands.length<3) continue;
+
+      const shuffledCols=shuffle([...colCands]);
+      const c0=shuffledCols[0];
+      const c1cands=shuffledCols.slice(1).filter(c=>CATS[c].g!==CATS[c0].g);
+      if(!c1cands.length) continue;
+      const c1=c1cands[0];
+      const c2cands=shuffledCols.filter(c=>c!==c0&&c!==c1&&CATS[c].g!==CATS[c0].g&&CATS[c].g!==CATS[c1].g);
+      if(!c2cands.length) continue;
+      const c2=c2cands[0];
+
+      return{rows:[CATS[r0],CATS[r1],CATS[r2]],cols:[CATS[c0],CATS[c1],CATS[c2]]};
+    }
+  }
+  return{rows:[CATS[0],CATS[21],CATS[40]],cols:[CATS[60],CATS[107],CATS[148]]};
 }
 
 // ── STATE ──────────────────────────────────────────────────────────────────
