@@ -8,6 +8,10 @@
     { "source": "/lights-out-and-toe-away/play-online",        "destination": "/lights-out-and-toe-away/index.html" },
     { "source": "/lights-out-and-toe-away/how-to-play",        "destination": "/lights-out-and-toe-away/index.html" },
     { "source": "/lights-out-and-toe-away/play-with-a-friend", "destination": "/lights-out-and-toe-away/index.html" },
-    { "source": "/lights-out-and-toe-away/(.*)",               "destination": "/lights-out-and-toe-away/index.html" }
+    { "source": "/lights-out-and-toe-away/(.*)",               "destination": "/lights-out-and-toe-away/index.html" },
+    { "source": "/missing-grid/play-random-race", "destination": "/missing-grid/index.html" },
+    { "source": "/missing-grid/custom",           "destination": "/missing-grid/index.html" },
+    { "source": "/missing-grid/(.*)",             "destination": "/missing-grid/index.html" },
+    { "source": "/unblur-the-driver/(.*)",        "destination": "/unblur-the-driver/index.html" }
   ]
 }
