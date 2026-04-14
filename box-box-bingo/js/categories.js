@@ -110,14 +110,14 @@ function catIcon(text) {
 // == TEAM & TEAMMATE LOOKUP DATA ==
 // Driver IDs per constructor (only the named popular teams)
 const TEAM_DRIVERS = {
-  'Ferrari':                  ['alberto-ascari','alain-prost','carlos-reutemann','carlos-sainz-jr','charles-leclerc','felipe-massa','fernando-alonso','giancarlo-fisichella','gilles-villeneuve','jacky-ickx','jody-scheckter','john-surtees','juan-manuel-fangio','kimi-raikkonen','mario-andretti','michael-schumacher','nigel-mansell','niki-lauda','nino-farina','oliver-bearman','rene-arnoux','rubens-barrichello','sebastian-vettel'],
+  'Ferrari':                  ['alberto-ascari','alain-prost','carlos-reutemann','carlos-sainz-jr','charles-leclerc','felipe-massa','fernando-alonso','giancarlo-fisichella','gilles-villeneuve','jacky-ickx','jody-scheckter','john-surtees','juan-manuel-fangio','kimi-raikkonen','lewis-hamilton','mario-andretti','michael-schumacher','nigel-mansell','niki-lauda','nino-farina','oliver-bearman','rene-arnoux','rubens-barrichello','sebastian-vettel'],
   'Mercedes':                 ['george-russell','juan-manuel-fangio','kimi-antonelli','lewis-hamilton','michael-schumacher','nico-rosberg','valtteri-bottas'],
-  'Red Bull':                 ['alexander-albon','daniil-kvyat','daniel-ricciardo','david-coulthard','mark-webber','max-verstappen','pierre-gasly','sebastian-vettel','sergio-perez'],
+  'Red Bull':                 ['alexander-albon','daniil-kvyat','daniel-ricciardo','david-coulthard','liam-lawson','mark-webber','max-verstappen','pierre-gasly','sebastian-vettel','sergio-perez'],
   'McLaren':                  ['alain-prost','ayrton-senna','bruce-mclaren','carlos-sainz-jr','daniel-ricciardo','david-coulthard','denny-hulme','emerson-fittipaldi','fernando-alonso','gilles-villeneuve','heikki-kovalainen','james-hunt','jenson-button','jody-scheckter','juan-pablo-montoya','keke-rosberg','kevin-magnussen','kimi-raikkonen','lando-norris','lewis-hamilton','mika-hakkinen','nigel-mansell','niki-lauda','oscar-piastri','sergio-perez'],
-  'Williams':                 ['ayrton-senna','alain-prost','alexander-albon','carlos-reutemann','damon-hill','david-coulthard','felipe-massa','franco-colapinto','george-russell','heinz-harald-frentzen','jacky-ickx','jacques-villeneuve','jenson-button','juan-pablo-montoya','keke-rosberg','lance-stroll','logan-sargeant','mark-webber','nelson-piquet','nicholas-latifi','nico-hulkenberg','nico-rosberg','nigel-mansell','nyck-de-vries','pastor-maldonado','ralf-schumacher','robert-kubica','rubens-barrichello','valtteri-bottas'],
+  'Williams':                 ['ayrton-senna','alain-prost','alexander-albon','carlos-reutemann','carlos-sainz-jr','damon-hill','david-coulthard','felipe-massa','franco-colapinto','george-russell','heinz-harald-frentzen','jacques-villeneuve','jenson-button','juan-pablo-montoya','keke-rosberg','lance-stroll','logan-sargeant','mark-webber','nelson-piquet','nicholas-latifi','nico-hulkenberg','nico-rosberg','nigel-mansell','nyck-de-vries','pastor-maldonado','ralf-schumacher','robert-kubica','rubens-barrichello','valtteri-bottas'],
   'Renault':                  ['alain-prost','carlos-sainz-jr','daniel-ricciardo','esteban-ocon','fernando-alonso','giancarlo-fisichella','heikki-kovalainen','jacques-villeneuve','jarno-trulli','jenson-button','kevin-magnussen','nico-hulkenberg','rene-arnoux','robert-kubica','romain-grosjean'],
-  'Alpine':                   ['esteban-ocon','fernando-alonso','jack-doohan','pierre-gasly'],
-  'AlphaTauri/RB':            ['alexander-albon','carlos-sainz-jr','daniil-kvyat','daniel-ricciardo','liam-lawson','max-verstappen','nyck-de-vries','pierre-gasly','sebastian-vettel','yuki-tsunoda'],
+  'Alpine':                   ['esteban-ocon','fernando-alonso','franco-colapinto','jack-doohan','pierre-gasly'],
+  'AlphaTauri/RB':            ['alexander-albon','carlos-sainz-jr','daniil-kvyat','daniel-ricciardo','isack-hadjar','liam-lawson','max-verstappen','nyck-de-vries','pierre-gasly','sebastian-vettel','yuki-tsunoda'],
   'Sauber':                   ['antonio-giovinazzi','charles-leclerc','felipe-massa','gabriel-bortoleto','guanyu-zhou','heinz-harald-frentzen','jacques-villeneuve','kimi-raikkonen','nico-hulkenberg','robert-kubica','sebastian-vettel','sergio-perez','valtteri-bottas'],
   'Alfa Romeo':               ['antonio-giovinazzi','guanyu-zhou','juan-manuel-fangio','kimi-raikkonen','mario-andretti','nino-farina','valtteri-bottas'],
   'Haas':                     ['kevin-magnussen','mick-schumacher','nico-hulkenberg','oliver-bearman','romain-grosjean'],
@@ -136,10 +136,10 @@ const TEAM_DRIVERS = {
 // Sourced from "Notable Teammates" field — matched by exact label string
 const TEAMMATE_DRIVERS = {
   'michael-schumacher': ['felipe-massa','jos-verstappen','nelson-piquet','nico-rosberg','rubens-barrichello'],
-  'rubens-barrichello': ['jenson-button','michael-schumacher','pastor-maldonado','nico-hulkenberg'],
-  'fernando-alonso':    ['esteban-ocon','felipe-massa','jenson-button','kimi-raikkonen','lance-stroll','lewis-hamilton'],
+  'rubens-barrichello': ['jenson-button','michael-schumacher','mick-schumacher','pastor-maldonado','nico-hulkenberg'],
+  'fernando-alonso':    ['esteban-ocon','felipe-massa','giancarlo-fisichella','jarno-trulli','jenson-button','kimi-raikkonen','lance-stroll','lewis-hamilton'],
   'felipe-massa':       ['fernando-alonso','kimi-raikkonen','lance-stroll','michael-schumacher','valtteri-bottas'],
-  'daniel-ricciardo':   ['esteban-ocon','lando-norris','max-verstappen','sebastian-vettel','yuki-tsunoda'],
+  'daniel-ricciardo':   ['daniil-kvyat','esteban-ocon','lando-norris','max-verstappen','nico-hulkenberg','sebastian-vettel','yuki-tsunoda'],
 };
 
 // Display name shown on the category card
