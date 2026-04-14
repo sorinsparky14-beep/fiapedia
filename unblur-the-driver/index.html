@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unblur the Driver</title>
+  <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <button class="htp-btn" onclick="document.getElementById('htpModal').classList.add('open')">HOW TO PLAY</button>
+  <div class="logo">
+    <h1>UNBLUR THE <span>DRIVER</span></h1>
+  </div>
+  <div class="header-timer" id="headerTimer">
+    <span class="timer-label">TIME</span>
+    <span class="timer-display" id="timerDisplay">3:00</span>
+  </div>
+</header>
+
+<!-- HOW TO PLAY MODAL -->
+<div class="modal-overlay" id="htpModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('htpModal').classList.remove('open')">✕</button>
+
+    <h2>HOW TO <span>PLAY</span></h2>
+    <div class="modal-sub">Guess the mystery Formula One driver before time runs out</div>
+
+    <div class="htp-section-title">How it works</div>
+    <ul class="htp-steps">
+      <li><div class="step-icon">▶</div>Press <strong style="color:var(--red)">PLAY NOW</strong> to start. You have <strong style="color:var(--ivory)">2 minutes</strong> on the clock.</li>
+      <li><div class="step-icon">🔍</div>A heavily blurred photo of a Formula One driver is shown. Type a name in the search box and select a driver to make your guess.</li>
+      <li><div class="step-icon">📉</div>Each wrong guess makes the photo slightly clearer — use the visual clues to narrow it down.</li>
+      <li><div class="step-icon">8️⃣</div>You have 8 guesses total. Each guess also shows how close you are across 5 categories.</li>
+      <li><div class="step-icon">⏱</div>If time runs out or you use all 8 guesses without finding the driver, it's a DNF!</li>
+    </ul>
+
+    <hr class="modal-divider">
+
+    <div class="htp-section-title">Categories shown per guess</div>
+    <div class="htp-columns">
+      <div class="htp-col-item"><span class="tag">NAT</span> Nationality</div>
+      <div class="htp-col-item"><span class="tag">TEAM</span> Current / last Formula One team</div>
+      <div class="htp-col-item"><span class="tag">BORN</span> Birth decade</div>
+      <div class="htp-col-item"><span class="tag">WINS</span> Race victories</div>
+      <div class="htp-col-item"><span class="tag">POLES</span> Pole positions</div>
+    </div>
+
+    <hr class="modal-divider">
+
+    <div class="htp-section-title">Color guide</div>
+    <div class="htp-colors">
+      <div class="htp-color-row"><div class="htp-swatch correct"></div><span><strong style="color:var(--green)">Correct</strong> — exact match with the mystery driver</span></div>
+      <div class="htp-color-row"><div class="htp-swatch close"></div><span><strong style="color:var(--goldLight)">Close</strong> — nearby but not exact (see details below)</span></div>
+      <div class="htp-color-row"><div class="htp-swatch wrong"></div><span><strong style="color:var(--red)">Wrong</strong> — no match</span></div>
+    </div>
+
+    <div class="htp-nat-note">
+      <strong>🌍 Nationality "Close" rules:</strong><br>
+      <strong>Europe:</strong> only direct border neighbours count as close (e.g. German ↔ French, Dutch, Austrian…)<br>
+      <strong>Rest of world:</strong> same continent counts as close (e.g. Brazilian ↔ Colombian · Japanese ↔ Chinese, Thai · Australian ↔ New Zealander)<br><br>
+      <strong>📅 Born:</strong> within 1 decade = close · ↑ means the driver is younger, ↓ means older<br>
+      <strong>🏆 Wins / Poles:</strong> within ±5 = close · arrows show higher ↑ or lower ↓
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- PLAY NOW OVERLAY -->
+  <div class="play-overlay" id="playOverlay">
+    <div class="play-overlay-blur"></div>
+    <div class="play-overlay-content">
+      <div class="play-overlay-title">READY?</div>
+      <div class="play-overlay-sub">You have 2 minutes to guess the driver</div>
+      <button class="play-now-btn" id="playNowBtn" onclick="startGame()">▶ PLAY NOW</button>
+    </div>
+  </div>
+
+  <!-- Driver Photo -->
+  <div class="photo-container">
+    <div class="photo-placeholder lobby-placeholder" id="photoPlaceholder">🏎</div>
+    <img id="driverPhoto" class="driver-photo" style="display:none" alt="Driver" draggable="false">
+  </div>
+
+  <!-- Guess Counter -->
+  <div class="guess-counter">
+    <div class="guess-label" id="guessLabel">GUESS 1 OF 8</div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot correct"></div> Correct</div>
+    <div class="legend-item"><div class="legend-dot close"></div> Close</div>
+    <div class="legend-item"><div class="legend-dot wrong"></div> Wrong</div>
+  </div>
+
+  <!-- Search -->
+  <div class="search-container" id="searchContainer">
+    <input type="text" class="search-input" id="searchInput" placeholder="Search for a driver..." autocomplete="off">
+    <div class="dropdown" id="dropdown"></div>
+  </div>
+
+  <!-- Result banner — shown only when game ends -->
+  <div class="result-banner" id="resultBanner">
+    <h2 id="resultTitle"></h2>
+    <p id="resultDesc"></p>
+    <button class="play-again-btn" onclick="newGame()">PLAY AGAIN</button>
+  </div>
+
+  <!-- Guesses grid -->
+  <div class="guesses-section" id="guessesSection">
+    <div class="column-headers">
+      <div class="col-header">Driver</div>
+      <div class="col-header">NAT</div>
+      <div class="col-header">Team</div>
+      <div class="col-header">Born</div>
+      <div class="col-header">Wins</div>
+      <div class="col-header">Poles</div>
+    </div>
+    <div id="guessRows"></div>
+  </div>
+</main>
+
+<!--
+  LOAD ORDER — do not change
+  1. drivers.js   → DRIVERS array
+  2. images.js    → photo path notes (optional helper file)
+  3. categories.js → nationality proximity logic
+  4. game.js      → game engine
+-->
+<script src="js/drivers.js"></script>
+<script src="js/images.js"></script>
+<script src="js/categories.js"></script>
+<script src="js/game.js"></script>
+
+</body>
+</html>
