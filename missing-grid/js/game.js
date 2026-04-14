@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════
    Missing Grid – F1 Puzzle Game
-   game.js  —  Core game logic  v3 (FIAPEDIA)
+   game.js  —  Core game logic  v3 (GRILGRIDI)
    ═══════════════════════════════════════════ */
 
 /* ══ GLOBAL STATE ══ */
