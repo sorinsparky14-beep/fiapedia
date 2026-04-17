@@ -17,7 +17,7 @@ let P2_LABEL = "Player 2";
 let ROOM_CODE = "";
 let roomBC = null;
 let roomRole = "";
-let ROOM_POLL = null;;
+let ROOM_POLL = null;
 let selIdx=null;
 let timerInterval=null;
 let timerLeft=TURN_TIME;
@@ -180,21 +180,28 @@ function openM(idx){
   document.getElementById("mov").classList.add("on");
   setTimeout(()=>di.focus(),50);
 }
-function closeM(){document.getElementById("mov").classList.remove("on");selIdx=null;}
+function closeM(){document.getElementById("mov").classList.remove("on");selIdx=null;const s=document.getElementById("sugg");if(s){s.innerHTML="";s.style.display="none";}}
 const normalize=s=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 document.getElementById("di").addEventListener("input",function(){
   const q=normalize(this.value);
-  if(!q){document.getElementById("sugg").innerHTML="";return;}
-  const hits=DB.filter(d=>normalize(d.name).includes(q)).slice(0,8);
-  document.getElementById("sugg").innerHTML=hits.map(d=>{
+  if(q.length < 2){const s=document.getElementById("sugg");s.innerHTML="";s.style.display="none";return;}
+  const hits=DB.filter(d=>normalize(d.name).includes(q)).slice(0,20);
+  const suggEl=document.getElementById("sugg");
+  if(hits.length===0){suggEl.innerHTML="";suggEl.style.display="none";return;}
+  suggEl.style.display="block";
+  suggEl.innerHTML=hits.map(d=>{
     const esc=d.name.replace(/'/g,"\\'");
-    return `<div class="si" onclick="pickSug('${esc}')">${d.name}</div>`;
+    // Highlight matched portion in bold
+    const normName=normalize(d.name);
+    const idx=normName.indexOf(q);
+    const highlighted=d.name.slice(0,idx)+'<strong>'+d.name.slice(idx,idx+q.length)+'</strong>'+d.name.slice(idx+q.length);
+    return `<div class="si" onclick="pickSug('${esc}')">${highlighted}</div>`;
   }).join("");
   document.getElementById("err").textContent="";
 });
 document.getElementById("di").addEventListener("keydown",e=>{if(e.key==="Enter")submitD();if(e.key==="Escape")closeM();});
 document.getElementById("mov").addEventListener("click",e=>{if(e.target===document.getElementById("mov"))closeM();});
-function pickSug(name){document.getElementById("di").value=name;document.getElementById("sugg").innerHTML="";submitD();}
+function pickSug(name){document.getElementById("di").value=name;const s=document.getElementById("sugg");s.innerHTML="";s.style.display="none";submitD();}
 function submitD(){
   const raw=document.getElementById("di").value.trim();
   if(!raw)return;
@@ -207,6 +214,43 @@ function submitD(){
   }
   submitWith(drv);
 }
+// Check that all remaining empty cells can be completed with distinct unused drivers
+function canCompleteBoard(board, placingIdx, usedAfter, rows, cols){
+  // Build cells: for each empty cell (excluding the one being placed), find available drivers
+  var emptyCells=[];
+  for(var i=0;i<9;i++){
+    if(board[i]!==null) continue; // already filled
+    if(i===placingIdx) continue;  // cell being placed right now
+    var ri=Math.floor(i/3), ci=i%3;
+    var rc=rows[ri], cc=cols[ci];
+    var drivers=[];
+    for(var d=0;d<DB.length;d++){
+      if(usedAfter.has(DB[d].name)) continue;
+      try{ if(rc.check(DB[d])&&cc.check(DB[d])) drivers.push(d); }catch(e){}
+    }
+    emptyCells.push({cell:i, drivers:drivers});
+  }
+  if(emptyCells.length===0) return true; // no empty cells left
+  // Check each cell has at least 1 candidate
+  for(var j=0;j<emptyCells.length;j++){
+    if(emptyCells[j].drivers.length===0) return false;
+  }
+  // Run bipartite matching on remaining cells
+  var numCells=emptyCells.length;
+  var matchDriver={};
+  function augment(ci,seen){
+    var drivers=emptyCells[ci].drivers;
+    for(var k=0;k<drivers.length;k++){
+      var drv=drivers[k]; if(seen[drv]) continue; seen[drv]=true;
+      if(matchDriver[drv]===undefined||augment(matchDriver[drv],seen)){ matchDriver[drv]=ci; return true; }
+    }
+    return false;
+  }
+  var matched=0;
+  for(var i=0;i<numCells;i++){ if(augment(i,{})) matched++; }
+  return matched===numCells;
+}
+
 function submitWith(drv){
   if(!drv||!drv.name){console.error("submitWith: drv is undefined");return;}
   const idx=selIdx;
@@ -224,6 +268,14 @@ function submitWith(drv){
     return;
   }
   if(!GS.cols[c].check(drv)){
+    document.getElementById("err").textContent=`❌ ${drv.name} doesn't fit — turn passes!`;
+    setTimeout(()=>{closeM();passTurn("wrong answer");},900);
+    return;
+  }
+  // Check: placing this driver must not leave any remaining empty cell unsolvable
+  const usedAfter=new Set(GS.used);
+  usedAfter.add(drv.name);
+  if(!canCompleteBoard(GS.board,idx,usedAfter,GS.rows,GS.cols)){
     document.getElementById("err").textContent=`❌ ${drv.name} doesn't fit — turn passes!`;
     setTimeout(()=>{closeM();passTurn("wrong answer");},900);
     return;
@@ -428,12 +480,38 @@ function addBotBadge(){
 }
 function nextRound(){
   GS.round++;
-  newRoundBoard();
+  if(_cpick._isCustom){
+    // Custom game: go back to category picker, keep scores
+    cpickNewRound();
+  } else {
+    newRoundBoard();
+  }
 }
 function newSeries(){
   GS.scores={X:0,O:0};
   GS.round=1;
-  newRoundBoard();
+  if(_cpick._isCustom){
+    cpickNewRound();
+  } else {
+    newRoundBoard();
+  }
+}
+function cpickNewRound(){
+  cpickStopTimer(); // stop any running timer before reset
+  // Reset picks but keep scores and round counter
+  _cpick.rows=[null,null,null];
+  _cpick.cols=[null,null,null];
+  _cpick.tab='team';
+  _cpick.activeType=null;
+  _cpick.activeIdx=null;
+  _cpick.turn=0;
+  _cpick.consecutiveSkips=0;
+  _cpick.timerInterval=null;
+  _cpick.timerLeft=60;
+  showS('custompicker', false);
+  cpickRenderVisualGrid();
+  cpickUpdateHeader();
+  cpickStartTurnTimer();
 }
 function newRoundBoard(prebuiltGrid){
   let rows, cols;
@@ -457,6 +535,7 @@ function newRoundBoard(prebuiltGrid){
 }
 function confirmQuit(){
   stopTimer();
+  cpickStopTimer();
   clearTimeout(botThinkTimer); botThinkTimer=null;
   const ov = document.getElementById("quit-overlay");
   if(ov) ov.style.display = "flex";
@@ -639,6 +718,7 @@ window.addEventListener("popstate", function(e){
     const dov=document.getElementById("disconnect-overlay"); if(dov) dov.style.display="none";
     const qov=document.getElementById("quit-overlay"); if(qov) qov.style.display="none";
     clearInterval(ROOM_POLL);
+    cpickStopTimer(); // stop custom picker timer if active
     // Reset state BEFORE closing connection to prevent disconnect overlay firing
     const prevMode=GAME_MODE;
     GAME_MODE="same"; ROOM_CODE=""; roomRole=""; drawPending=false; selIdx=null;
@@ -738,7 +818,14 @@ function doBotMove(){
     const candidates=DB.filter(d=>!GS.used.has(d.name)&&rowCat.check(d)&&colCat.check(d));
     if(!candidates.length){ passTurn("bot skip"); return; }
 
-    const chosen=candidates[Math.floor(Math.random()*candidates.length)];
+    // Pick a safe candidate that doesn't block other cells
+    const shuffled=candidates.slice().sort(()=>Math.random()-.5);
+    let chosen=null;
+    for(const drv of shuffled){
+      const usedAfter=new Set(GS.used); usedAfter.add(drv.name);
+      if(canCompleteBoard(GS.board,cellIdx,usedAfter,GS.rows,GS.cols)){ chosen=drv; break; }
+    }
+    if(!chosen) chosen=shuffled[0]; // fallback: pick any if all block (shouldn't happen with valid grid)
     selIdx=cellIdx;
     GS.board[cellIdx]={p:"O",drv:chosen.name};
     GS.used.add(chosen.name);
@@ -1078,6 +1165,7 @@ function openGameTab(mode){
   if(mode==="same")       { startSameScreen(); }
   else if(mode==="bot")   { startVsBot(); }
   else if(mode==="room")  { showS("roomlobby"); }
+  else if(mode==="custom"){ startCustomPicker(); }
 }
 
 function handleLogoClick(){
@@ -1093,6 +1181,8 @@ function handleLogoClick(){
 
 function goHome(){
   stopTimer();
+  cpickStopTimer(); // fix: stop custom picker timer if active
+  _cpick._isCustom = false; // reset custom flag
   clearTimeout(resCountdownTimer); resCountdownTimer=null;
   clearInterval(cdInterval); cdInterval=null;
   clearTimeout(drawCancelTimer); drawCancelTimer=null;
@@ -1193,3 +1283,365 @@ window.addEventListener("beforeunload", ()=>{
     try { _conn.send({type:"bye"}); } catch(e){}
   }
 });
+
+// ── CUSTOM GAME PICKER ────────────────────────────────────────────────────
+let _cpick = {
+  rows: [null, null, null],
+  cols: [null, null, null],
+  tab: 'team',
+  activeType: null,
+  activeIdx: null,
+  turn: 0,           // 0..5, increments each pick; player = turn%2==0 ? P1 : P2
+  timerInterval: null,
+  timerLeft: 60
+};
+
+function startCustomPicker(){
+  GAME_MODE = "same";
+  P1_LABEL = "Player 1"; P2_LABEL = "Player 2";
+  GS.scores={X:0,O:0}; GS.round=1; // reset series on fresh start
+  _cpick = {rows:[null,null,null], cols:[null,null,null], tab:'team', activeType:null, activeIdx:null, turn:0, consecutiveSkips:0, timerInterval:null, timerLeft:60, _isCustom:true};
+  showS('custompicker');
+  cpickRenderVisualGrid();
+  cpickUpdateHeader();
+  cpickStartTurnTimer();
+}
+
+function cpickCurrentPlayer(){
+  return _cpick.turn % 2 === 0 ? 1 : 2;
+}
+
+function cpickPicksDone(){
+  return _cpick.rows.filter(Boolean).length + _cpick.cols.filter(Boolean).length;
+}
+
+function cpickUpdateHeader(){
+  var isP1 = cpickCurrentPlayer() === 1;
+  var done = cpickPicksDone();
+  var tiEl = document.getElementById('cpick-ti');
+  var lblEl = document.getElementById('cpick-timer-lbl');
+  var roundEl = document.getElementById('cpick-round-lbl');
+  if(tiEl){ tiEl.textContent = isP1 ? 'Player 1 — X' : 'Player 2 — O'; tiEl.className = isP1 ? 'ti ti-x' : 'ti ti-o'; }
+  if(lblEl) lblEl.textContent = isP1 ? 'P1 TURN' : 'P2 TURN';
+  if(roundEl) roundEl.textContent = 'Pick ' + (done+1) + '/6';
+}
+
+function cpickStartTurnTimer(){
+  cpickStopTimer();
+  _cpick.timerLeft = 60;
+  cpickUpdateTimerDisplay(60);
+  _cpick.timerInterval = setInterval(function(){
+    _cpick.timerLeft--;
+    cpickUpdateTimerDisplay(_cpick.timerLeft);
+    if(_cpick.timerLeft <= 0){
+      cpickStopTimer();
+      cpickSkipTurn();
+    }
+  }, 1000);
+}
+
+function cpickStopTimer(){
+  if(_cpick.timerInterval){ clearInterval(_cpick.timerInterval); _cpick.timerInterval = null; }
+}
+
+function cpickUpdateTimerDisplay(t){
+  var numEl = document.getElementById('cpick-timer-num');
+  var ringEl = document.getElementById('cpick-ring-fg');
+  if(numEl) numEl.textContent = t;
+  if(ringEl){
+    ringEl.style.strokeDashoffset = 138.2 * (1 - t/60);
+    ringEl.style.stroke = t > 20 ? 'var(--green)' : t > 10 ? 'var(--gold)' : 'var(--red)';
+  }
+}
+
+function cpickSkipTurn(){
+  // Time expired — pass turn to next player without placing anything
+  document.getElementById('cpick-panel').classList.remove('open');
+  _cpick.activeType = null;
+  _cpick.activeIdx = null;
+  _cpick.turn++;
+  _cpick.consecutiveSkips = (_cpick.consecutiveSkips || 0) + 1;
+
+  var done = cpickPicksDone();
+
+  // If all 6 slots filled, start game
+  if(done >= 6){
+    _cpick.consecutiveSkips = 0;
+    setTimeout(function(){ cpickStartGame(); }, 350);
+    return;
+  }
+
+  // Safety: if both players have skipped 6 times total without picking anything,
+  // auto-fill remaining empty slots with random valid categories and start
+  if(_cpick.consecutiveSkips >= 6){
+    _cpick.consecutiveSkips = 0;
+    cpickAutoFillAndStart();
+    return;
+  }
+
+  cpickRenderVisualGrid();
+  cpickUpdateHeader();
+  cpickStartTurnTimer();
+}
+
+function cpickAutoFillAndStart(){
+  // Fill any remaining empty slots with random valid categories
+  var types = ['row','col'];
+  for(var t=0;t<types.length;t++){
+    var type = types[t];
+    var arr = type==='row' ? _cpick.rows : _cpick.cols;
+    for(var i=0;i<3;i++){
+      if(arr[i] !== null) continue;
+      var usedIds = new Set([..._cpick.rows,..._cpick.cols].filter(Boolean).map(function(c){ return c.id; }));
+      var oppositeArr = (type==='row' ? _cpick.cols : _cpick.rows).filter(Boolean);
+      var valid = CATS.filter(function(cat){
+        if(usedIds.has(cat.id)) return false;
+        if(oppositeArr.length === 0) return true;
+        for(var j=0;j<oppositeArr.length;j++){
+          var opp = oppositeArr[j];
+          var n = DB.filter(function(d){ try{ return cat.check(d)&&opp.check(d); }catch(e){ return false; } }).length;
+          if(n < 2) return false;
+        }
+        return true;
+      });
+      if(valid.length > 0){
+        arr[i] = valid[Math.floor(Math.random()*valid.length)];
+      }
+    }
+  }
+  cpickRenderVisualGrid();
+  if(_cpick.rows.every(Boolean) && _cpick.cols.every(Boolean)){
+    setTimeout(function(){ cpickStartGame(); }, 350);
+  } else {
+    // Still can't fill — just start with what we have (cpickStartGame will validate)
+    setTimeout(function(){ cpickStartGame(); }, 350);
+  }
+}
+
+function cpickOpenPanel(type, idx){
+  // Any empty slot is clickable on the current player's turn
+  var arr = type==='row' ? _cpick.rows : _cpick.cols;
+  if(arr[idx] !== null) return; // already filled — clicking opens to re-pick (handled as filled)
+
+  cpickStopTimer();
+  _cpick.activeType = type;
+  _cpick.activeIdx = idx;
+  _cpick.tab = 'team';
+  document.querySelectorAll('.cpick-tab').forEach(function(t){
+    t.classList.toggle('active', t.textContent === 'Teams');
+  });
+  cpickRenderGrid();
+  document.getElementById('cpick-panel').classList.add('open');
+  document.getElementById('cpick-panel-title').textContent = 'PICK A ' + (type==='row' ? 'ROW' : 'COLUMN') + ' CATEGORY';
+}
+
+function cpickClosePanel(){
+  document.getElementById('cpick-panel').classList.remove('open');
+  _cpick.activeType = null;
+  _cpick.activeIdx = null;
+  if(cpickPicksDone() < 6 && !_cpick.timerInterval){
+    cpickStartTurnTimer();
+  }
+}
+
+function cpickPanelBgClick(e){
+  if(e.target === document.getElementById('cpick-panel')) cpickClosePanel();
+}
+
+function cpickSetTab(tab){
+  _cpick.tab = tab;
+  var map = {team:'Teams',nat:'Nations',trophy:'Trophies',circuit:'Circuits',tp:'Managers',tm:'Teammates',wild:'Wildcards'};
+  document.querySelectorAll('.cpick-tab').forEach(function(t){
+    t.classList.toggle('active', t.textContent === (map[tab]||''));
+  });
+  cpickRenderGrid();
+}
+
+function cpickImgHtml(cat){
+  if(!cat.img) return '<div style="font-size:28px;">' + (cat.icon||'?') + '</div>';
+  var cls = cat.carImg ? 'car' : cat.flagImg ? 'flag' : 'portrait';
+  return '<img class="cpick-card-img ' + cls + '" src="' + cat.img + '" alt=""/>';
+}
+
+
+// ── BIPARTITE MATCHING — verifies distinct driver assignment is possible ──
+function cpickCanAssign(filledRows, filledCols){
+  var cells = [];
+  for(var r=0;r<filledRows.length;r++){
+    for(var c=0;c<filledCols.length;c++){
+      var rc=filledRows[r], cc=filledCols[c];
+      var drivers=[];
+      for(var d=0;d<DB.length;d++){
+        try{ if(rc.check(DB[d])&&cc.check(DB[d])) drivers.push(d); }catch(e){}
+      }
+      if(drivers.length<2) return false;
+      cells.push(drivers);
+    }
+  }
+  var numCells=cells.length;
+  var matchDriver={};
+  function augment(cell,seen){
+    for(var k=0;k<cells[cell].length;k++){
+      var drv=cells[cell][k];
+      if(seen[drv]) continue;
+      seen[drv]=true;
+      if(matchDriver[drv]===undefined||augment(matchDriver[drv],seen)){
+        matchDriver[drv]=cell; return true;
+      }
+    }
+    return false;
+  }
+  var matched=0;
+  for(var i=0;i<numCells;i++){ if(augment(i,{})) matched++; }
+  return matched===numCells;
+}
+
+function cpickRenderGrid(){
+  var grid = document.getElementById('cpick-grid');
+  if(!grid) return;
+  var oppositeArr = (_cpick.activeType==='row' ? _cpick.cols : _cpick.rows).filter(Boolean);
+  var allUsedIds = new Set([..._cpick.rows,..._cpick.cols].filter(Boolean).map(function(c){ return c.id; }));
+
+  var cards = CATS.filter(function(cat){ return cat.g===_cpick.tab; }).map(function(cat){
+    var usedAnywhere = allUsedIds.has(cat.id);
+    var incompatible = false;
+
+    if(!usedAnywhere && oppositeArr.length>0){
+      // Quick check: each cell must have >=2 drivers
+      for(var i=0;i<oppositeArr.length;i++){
+        var opp=oppositeArr[i];
+        var n=DB.filter(function(d){ try{ return cat.check(d)&&opp.check(d); }catch(e){ return false; } }).length;
+        if(n<2){ incompatible=true; break; }
+      }
+      // Full matching check: verify complete distinct assignment exists
+      if(!incompatible){
+        var testRows=_cpick.activeType==='row'
+          ? (function(){ var r=_cpick.rows.slice(); r[_cpick.activeIdx]=cat; return r.filter(Boolean); })()
+          : _cpick.rows.filter(Boolean);
+        var testCols=_cpick.activeType==='col'
+          ? (function(){ var c=_cpick.cols.slice(); c[_cpick.activeIdx]=cat; return c.filter(Boolean); })()
+          : _cpick.cols.filter(Boolean);
+        if(testRows.length>0&&testCols.length>0){
+          if(!cpickCanAssign(testRows,testCols)) incompatible=true;
+        }
+      }
+    }
+
+    var isDisabled=usedAnywhere||incompatible;
+    var safeId=cat.id.replace(/'/g,"\'");
+    return '<div class="cpick-card'+(isDisabled?' disabled':'')+'"'
+      +(isDisabled?'':' onclick="cpickSelect(\''+safeId+'\')"')+'>'  
+      +cpickImgHtml(cat)
+      +'<div class="cpick-card-label">'+cat.label.replace(/\n/g,' ')+'</div>'
+      +'</div>';
+  }).join('');
+  grid.innerHTML = cards||'<div style="color:var(--t2);font-family:Teko,sans-serif;font-size:18px;padding:20px;text-align:center;">No categories in this tab</div>';
+}
+
+function cpickSelect(catId){
+  if(_cpick.activeType === null) return;
+  var cat = CATS.find(function(c){ return c.id===catId; });
+  if(!cat) return;
+  var arr = _cpick.activeType==='row' ? _cpick.rows : _cpick.cols;
+  arr[_cpick.activeIdx] = cat;
+  _cpick.consecutiveSkips = 0; // reset skip counter on successful pick
+
+  document.getElementById('cpick-panel').classList.remove('open');
+  _cpick.activeType = null;
+  _cpick.activeIdx = null;
+
+  _cpick.turn++;
+  cpickRenderVisualGrid();
+
+  if(cpickPicksDone() >= 6){
+    cpickStopTimer();
+    setTimeout(function(){ cpickStartGame(); }, 350);
+  } else {
+    cpickUpdateHeader();
+    cpickStartTurnTimer();
+  }
+}
+
+function cpickRemove(type, idx, e){
+  e && e.stopPropagation();
+  var arr = type==='row' ? _cpick.rows : _cpick.cols;
+  if(!arr[idx]) return;
+  arr[idx] = null;
+  // Decrement turn so the same player who placed it gets to re-pick
+  if(_cpick.turn > 0) _cpick.turn--;
+  cpickRenderVisualGrid();
+  cpickUpdateHeader();
+  cpickStartTurnTimer();
+}
+
+const GROUP_BADGE = {team:'TEAM',nat:'NATION',trophy:'TROPHY',circuit:'CIRCUIT',tp:'BOSS',wild:'WILDCARD',tm:'TEAMMATE'};
+const BADGE_CLASS = {team:'b-team',nat:'b-nat',trophy:'b-troph',circuit:'b-circ',tp:'b-tp',wild:'b-wild',tm:'b-tm'};
+
+function cpickRenderVisualGrid(){
+  for(var i=0;i<3;i++){
+    var col = document.getElementById('cpick-col-'+i);
+    var row = document.getElementById('cpick-row-'+i);
+    if(col) cpickRenderSlotEl(col, _cpick.cols[i], 'col', i);
+    if(row) cpickRenderSlotEl(row, _cpick.rows[i], 'row', i);
+  }
+}
+
+function cpickRenderSlotEl(el, cat, type, idx){
+  var baseClass = type==='col' ? 'cl cpick-col-cell' : 'cl row-cl cpick-row-cell';
+  if(!cat){
+    // All empty slots are clickable — player picks whichever they want
+    el.className = baseClass + ' empty cpick-active-slot';
+    el.innerHTML = '<div class="cpick-slot-add"><span class="cpick-plus">+</span><div class="cpick-add-label">ADD</div></div>';
+    el.onclick = function(){ cpickOpenPanel(type, idx); };
+  } else {
+    el.className = baseClass + ' filled';
+    var txt = cat.label.replace(/\n/g,'<br>');
+    var badge = BADGE_CLASS[cat.g]||'';
+    var badgeTxt = GROUP_BADGE[cat.g]||cat.g.toUpperCase();
+    var imgHtml = '';
+    if(cat.img && cat.carImg)       imgHtml = '<img class="cl-car" src="' + cat.img + '" alt=""/>';
+    else if(cat.img && cat.flagImg) imgHtml = '<img class="cl-flag" src="' + cat.img + '" alt=""/>';
+    else if(cat.img)                imgHtml = '<img class="cl-pt" src="' + cat.img + '" alt=""/>';
+    else                            imgHtml = '<div class="cl-ic">' + (cat.icon||'?') + '</div>';
+    el.innerHTML = imgHtml + '<div class="cl-tx">' + txt + '</div><span class="badge ' + badge + '">' + badgeTxt + '</span>';
+    el.onclick = null; // filled slots are not re-openable
+  }
+}
+
+function cpickStartGame(){
+  cpickStopTimer();
+  var rows = _cpick.rows;
+  var cols = _cpick.cols;
+  if(!rows.every(Boolean)||!cols.every(Boolean)) return;
+
+  // Final safety: only block if a cell has ZERO valid drivers
+  for(var ri=0;ri<rows.length;ri++){
+    for(var ci=0;ci<cols.length;ci++){
+      var r = rows[ri]; var c = cols[ci];
+      var n = DB.filter(function(d){ try{return r.check(d)&&c.check(d);}catch(e){return false;} }).length;
+      if(n < 2){
+        // This cell has fewer than 2 drivers - roll back the more recently added of the two
+        rows[ri] = null;
+        if(_cpick.turn >= 1) _cpick.turn -= 1; else _cpick.turn = 0;
+        cpickRenderVisualGrid();
+        cpickUpdateHeader();
+        cpickStartTurnTimer();
+        return;
+      }
+    }
+  }
+
+  GAME_MODE = "same";
+  P1_LABEL = "Player 1"; P2_LABEL = "Player 2";
+  GS.board=Array(9).fill(null);
+  GS.rows=rows; GS.cols=cols;
+  GS.cur="X"; GS.used=new Set(); GS.over=false;
+  // Keep scores & round across custom game rounds; reset only on fresh start
+  if(!_cpick._isCustom){
+    GS.scores={X:0,O:0}; GS.round=1;
+  }
+  GS.drawOffer=null; drawPending=false;
+  showS('game-same', true);
+  renderGrid(); renderScore(); renderUsed();
+  resetTimer();
+}
