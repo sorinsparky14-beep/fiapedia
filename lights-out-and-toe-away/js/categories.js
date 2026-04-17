@@ -174,9 +174,37 @@ function checkWin(board){
 }
 
 // ── GRID BUILDER ────────────────────────────────────────────────────────────
-function countValid(a,b){return DB.filter(d=>a.check(d)&&b.check(d)).length;}
 
 // Pre-compute all valid pairs (>=2 drivers) between different groups — cached
+function countValid(a,b){return DB.filter(d=>{try{return a.check(d)&&b.check(d);}catch(e){return false;}}).length;}
+
+// Bipartite matching: checks that all 9 cells can be filled with distinct drivers (>=2 per cell)
+function gridCanAssign(rows, cols){
+  const cells=[];
+  for(let r=0;r<rows.length;r++){
+    for(let c=0;c<cols.length;c++){
+      const rc=rows[r], cc=cols[c];
+      const drivers=[];
+      for(let d=0;d<DB.length;d++){
+        try{ if(rc.check(DB[d])&&cc.check(DB[d])) drivers.push(d); }catch(e){}
+      }
+      if(drivers.length<2) return false; // each cell needs >=2 options
+      cells.push(drivers);
+    }
+  }
+  const matchDriver={};
+  function augment(cell,seen){
+    for(let k=0;k<cells[cell].length;k++){
+      const drv=cells[cell][k]; if(seen[drv]) continue; seen[drv]=true;
+      if(matchDriver[drv]===undefined||augment(matchDriver[drv],seen)){ matchDriver[drv]=cell; return true; }
+    }
+    return false;
+  }
+  let matched=0;
+  for(let i=0;i<cells.length;i++){ if(augment(i,{})) matched++; }
+  return matched===cells.length;
+}
+
 let _pairIdx=null;
 function getPairIndex(){
   if(_pairIdx) return _pairIdx;
@@ -232,7 +260,13 @@ function buildGrid(){
       if(!c2cands.length) continue;
       const c2=c2cands[0];
 
-      return{rows:[CATS[r0],CATS[r1],CATS[r2]],cols:[CATS[c0],CATS[c1],CATS[c2]]};
+      const rows=[CATS[r0],CATS[r1],CATS[r2]];
+      const cols=[CATS[c0],CATS[c1],CATS[c2]];
+
+      // Final check: all 9 cells must support a complete distinct driver assignment
+      if(!gridCanAssign(rows,cols)) continue;
+
+      return{rows,cols};
     }
   }
   return{rows:[CATS[0],CATS[21],CATS[40]],cols:[CATS[60],CATS[107],CATS[148]]};
