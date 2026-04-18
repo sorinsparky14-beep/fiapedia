@@ -230,99 +230,83 @@
     ============================================================ */
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2px;
+      grid-template-columns: repeat(2, 366px);
+      gap: 40px 32px;
       width: 100%;
       max-width: 860px;
+      justify-content: center;
       opacity: 0;
       animation: fadeUp .8s .5s ease forwards;
     }
 
     .card {
-      background: var(--gunmetal);
-      border: 1px solid rgba(184,184,208,.12);
+      position: relative;
+      border: 0.5px solid rgba(184,184,208,.35);
       padding: 0;
       text-decoration: none;
       color: inherit;
-      overflow: hidden;
+      overflow: visible;
       cursor: pointer;
-      transition: border-color .3s, transform .3s;
-      display: flex;
-      flex-direction: column;
+      transition: border-color .3s;
+      display: block;
+      width: 366px;
+      height: 450px;
+      flex-shrink: 0;
     }
 
-    .card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(232,0,45,.06) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity .3s;
-    }
+    .card:hover { border-color: rgba(232,0,45,.5); }
 
-    .card:hover              { border-color: rgba(232,0,45,.4); transform: translateY(-3px); }
-    .card:hover::before      { opacity: 1; }
-
-    .card::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: var(--red);
-      transform: scaleY(0);
-      transform-origin: bottom;
-      transition: transform .35s;
-    }
-
-    .card:hover::after { transform: scaleY(1); }
-
-    /* Card tag */
+    /* Card tag — sits on the top border, top-left */
     .card-tag {
+      position: absolute;
+      top: 0;
+      left: 12px;
+      transform: translateY(-50%);
+      background: var(--void);
+      padding: 0 6px;
       font-size: 10px;
       font-weight: 600;
       letter-spacing: .3em;
       text-transform: uppercase;
       color: var(--red);
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 12px 16px 10px;
       margin: 0;
-      flex-shrink: 0;
-    }
-
-    .card-tag::before {
-      content: '';
-      display: block;
-      width: 20px;
-      height: 1px;
-      background: var(--red);
+      white-space: nowrap;
+      z-index: 1;
     }
 
     /* Card image */
-    .card-image              { width: 100%; height: auto; display: block; transition: transform .4s; }
-    .card:hover .card-image  { transform: scale(1.02); }
+    .card-image {
+      width: 366px;
+      height: 450px;
+      display: block;
+      object-fit: cover;
+    }
 
-    /* Card CTA */
+    /* Card CTA — sits on the bottom border, bottom-right */
     .card-cta {
+      position: absolute;
+      bottom: 0;
+      right: 12px;
+      transform: translateY(50%);
+      background: var(--void);
+      padding: 0 6px;
       font-weight: 600;
       font-size: 12px;
       letter-spacing: .25em;
       text-transform: uppercase;
       color: var(--silver);
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px 18px 12px;
-      align-self: flex-end;
-      flex-shrink: 0;
-      transition: gap .2s, color .2s;
+      gap: 8px;
+      white-space: nowrap;
+      z-index: 1;
+      transition: color .2s;
     }
 
-    .card:hover .card-cta  { gap: 16px; color: var(--red); }
-    .card-cta::after       { content: '→'; font-size: 14px; }
+    .card:hover .card-cta { color: var(--red); }
+    .card-cta::after      { content: '→'; font-size: 13px; }
 
     /* ============================================================
        FOOTER
@@ -494,8 +478,8 @@
 
       /* Cards */
       .cards {
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 4px;
+        grid-template-columns: repeat(2, minmax(200px, 366px));
+        gap: 36px 20px;
         max-width: 100%;
       }
 
@@ -563,11 +547,18 @@
       /* Cards */
       .cards {
         grid-template-columns: 1fr;
-        gap: 6px;
+        gap: 36px;
       }
 
       .card {
-        padding: 24px 18px 32px;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 366 / 450;
+      }
+
+      .card-image {
+        width: 100%;
+        height: 100%;
       }
 
       /* More games */
