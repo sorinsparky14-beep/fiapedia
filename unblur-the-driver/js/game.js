@@ -161,7 +161,7 @@ function compare(guess, target) {
 
   // Born decade: correct = exact, close = 1 decade apart, wrong = 2+ decades apart
   // Map decades to numbers for comparison
-  const decadeMap = { '10s': 1, '20s': 2, '30s': 3, '40s': 4, '50s': 5, '60s': 6, '70s': 7, '80s': 8, '90s': 9, '00s': 10 };
+  const decadeMap = { '1910s': 1, '20s': 2, '30s': 3, '40s': 4, '50s': 5, '60s': 6, '70s': 7, '80s': 8, '90s': 9, '00s': 10, '2010s': 11 };
   const gBorn = decadeMap[guess.born] || 0;
   const tBorn = decadeMap[target.born] || 0;
   const bornDiff = Math.abs(gBorn - tBorn);
