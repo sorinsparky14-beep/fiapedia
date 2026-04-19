@@ -667,6 +667,7 @@ const SCREEN_TITLES = {
   "matchmaking":  "Play Online — Lights Out & Toe Away",
   "roomlobby":    "Play with a Friend — Lights Out & Toe Away",
   "roomcreated":  "Play with a Friend — Lights Out & Toe Away",
+  "custompicker": "Custom Game — Lights Out & Toe Away",
 };
 
 // Map screen IDs to clean URL paths
@@ -677,6 +678,7 @@ function screenPath(id, resolvedId){
   if(id==="game" || resolvedId==="game-same")       return "/lights-out-and-toe-away/same-screen";
   if(resolvedId==="game-bot")                       return "/lights-out-and-toe-away/play-online";
   if(resolvedId==="game-room")                      return "/lights-out-and-toe-away/play-with-a-friend";
+  if(id==="custompicker")                           return "/lights-out-and-toe-away/custom-game";
   return "/lights-out-and-toe-away/";
 }
 
@@ -1169,14 +1171,7 @@ function openGameTab(mode){
 }
 
 function handleLogoClick(){
-  const path = window.location.pathname;
-  // Pe pagina home a jocului → du-te la hub
-  if(path === "/lights-out-and-toe-away/" || path === "/lights-out-and-toe-away"){
-    window.location.href = "/";
-  } else {
-    // Pe orice alta pagina (same-screen, play-with-a-friend, play-online) → pagina principala a jocului
-    goHome();
-  }
+  goHome();
 }
 
 function goHome(){
