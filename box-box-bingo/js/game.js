@@ -198,7 +198,7 @@ function _showHostDisconnect() {
   stopSound();
   clearInterval(timerInt); clearInterval(totalInt); clearInterval(lobbyInterval);
   mpMode = null; mpRoomCode = null; mpPlayerName = null; mpSeed = null;
-  gs = null; prevStreak = 0; assigning = false;
+  gs = null; assigning = false;
   if (_ws) { _ws.close(); _ws = null; }
   mpPlayers = {};
   document.getElementById('modal-name').style.display = 'none';
@@ -217,7 +217,7 @@ function _showConnError(msg) {
   stopSound();
   clearInterval(timerInt); clearInterval(totalInt); clearInterval(lobbyInterval);
   mpMode = null; mpRoomCode = null; mpPlayerName = null; mpSeed = null;
-  gs = null; prevStreak = 0; assigning = false;
+  gs = null; assigning = false;
   if (_ws) { _ws.close(); _ws = null; }
   mpPlayers = {};
   document.getElementById('modal-name').style.display = 'none';
@@ -364,7 +364,7 @@ function startMpGame() {
   // Guard against seed=0 which causes seededRandom to produce all-zero output
   const rng = seededRandom(mpSeed || 1);
   gs = buildGameSeeded(rng);
-  prevStreak = 0; assigning = false;
+  assigning = false;
   showScreen('screen-game');
   renderDriver(); renderStats(); renderGrid(); updateTimerUI();
   document.getElementById('total-timer').textContent = '0:00';
@@ -383,7 +383,7 @@ function buildGameSeeded(rng) {
 }
 
 // == GAME STATE ===============================================================
-let gs = null, timerInt = null, totalInt = null, prevStreak = 0, assigning = false;
+let gs = null, timerInt = null, totalInt = null, assigning = false;
 
 function buildGame() {
   const categories  = generateCategories();
@@ -745,7 +745,7 @@ function closeMyBoard() {
 function mpPlayAgain() {
   stopSound();
   clearInterval(timerInt); clearInterval(totalInt);
-  gs = null; prevStreak = 0; assigning = false;
+  gs = null; assigning = false;
   showLobby();
 }
 
@@ -759,7 +759,7 @@ function goHome() {
   stopSound();
   clearInterval(timerInt); clearInterval(totalInt); clearInterval(lobbyInterval);
   mpMode = null; mpRoomCode = null; mpPlayerName = null; mpSeed = null;
-  gs = null; prevStreak = 0; assigning = false;
+  gs = null; assigning = false;
   if (_ws) { _ws.close(); _ws = null; }
   mpPlayers = {};
   history.pushState({}, '', '/box-box-bingo/');
@@ -771,7 +771,7 @@ function startGame() {
   mpMode = 'solo'; mpRoomCode = null; mpPlayerName = null;
   if (_ws) { _ws.close(); _ws = null; }
   mpPlayers = {};
-  gs = buildGame(); prevStreak = 0; assigning = false;
+  gs = buildGame(); assigning = false;
   history.pushState({}, '', '/box-box-bingo/play-solo');
   showScreen('screen-game');
   renderDriver(); renderStats(); renderGrid(); updateTimerUI();
