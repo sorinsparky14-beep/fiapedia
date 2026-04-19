@@ -710,7 +710,8 @@ function showS(id, pushHistory=true){
 window.addEventListener("popstate", function(e){
   const id = (e.state && e.state.screen) || "home";
   const isGameScreen = id==="game-same"||id==="game-bot"||id==="game-room";
-  if(id==="home" || isGameScreen){
+  // Run cleanup when returning to home, any game screen, or custom picker
+  if(id==="home" || isGameScreen || id==="custompicker"){
     stopTimer();
     stopHeartbeat();
     clearInterval(mmInterval); mmInterval=null;
@@ -720,7 +721,7 @@ window.addEventListener("popstate", function(e){
     const dov=document.getElementById("disconnect-overlay"); if(dov) dov.style.display="none";
     const qov=document.getElementById("quit-overlay"); if(qov) qov.style.display="none";
     clearInterval(ROOM_POLL);
-    cpickStopTimer(); // stop custom picker timer if active
+    cpickStopTimer();
     // Reset state BEFORE closing connection to prevent disconnect overlay firing
     const prevMode=GAME_MODE;
     GAME_MODE="same"; ROOM_CODE=""; roomRole=""; drawPending=false; selIdx=null;
@@ -729,11 +730,11 @@ window.addEventListener("popstate", function(e){
     if(connToClose) connToClose.close();
     if(_peer && !_peer.destroyed){ _peer.destroy(); _peer=null; }
   }
-  document.querySelectorAll(".scr").forEach(s=>{ s.classList.remove("on"); s.style.display=""; });
-  const targetEl=document.getElementById(id);
-  if(targetEl){ targetEl.classList.add("on"); }
-  const footer=document.getElementById("info-footer");
-  if(footer) footer.style.display=isGameScreen?"block":"none";
+  // Use showS(id, false) — properly updates show-bg, footer, screen visibility
+  // without pushing a new history entry
+  showS(id, false);
+  // Update page title from map
+  document.title = SCREEN_TITLES[id] || "Lights Out & Toe Away";
 });
 
 
@@ -1171,7 +1172,14 @@ function openGameTab(mode){
 }
 
 function handleLogoClick(){
-  goHome();
+  const path = window.location.pathname;
+  // Pe pagina home a jocului → du-te la hub
+  if(path === "/lights-out-and-toe-away/" || path === "/lights-out-and-toe-away"){
+    window.location.href = "/";
+  } else {
+    // Pe orice alta pagina → pagina principala a jocului
+    goHome();
+  }
 }
 
 function goHome(){
@@ -1231,6 +1239,11 @@ window.addEventListener("load",function(){
     history.replaceState({screen:"howto"}, "", path);
     document.title = "How to Play — Lights Out & Toe Away";
     showS("howto", false);
+  } else if(path==="/lights-out-and-toe-away/custom-game"){
+    document.body.classList.add("show-bg");
+    history.replaceState({screen:"custompicker"}, "", path);
+    document.title = "Custom Game — Lights Out & Toe Away";
+    startCustomPicker();
   } else {
     // Home
     history.replaceState({screen:"home"}, "", "/lights-out-and-toe-away/");
