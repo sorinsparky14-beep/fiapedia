@@ -15,4 +15,11 @@ document.addEventListener('DOMContentLoaded', function() {
       navigate(this.getAttribute('data-page'));
     });
   });
+
+  // Handle ?page=privacy and ?page=terms from cookie consent links
+  var params = new URLSearchParams(window.location.search);
+  var page = params.get('page');
+  if (page && document.getElementById(page)) {
+    navigate(page);
+  }
 });
