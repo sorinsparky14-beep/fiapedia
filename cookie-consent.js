@@ -312,6 +312,8 @@
       width: 44px;
       height: 24px;
       margin-top: 2px;
+      display: block;
+      cursor: pointer;
     }
 
     .cc-toggle input {
@@ -319,6 +321,11 @@
       width: 0;
       height: 0;
       position: absolute;
+    }
+
+    .cc-toggle input:disabled ~ .cc-toggle-track {
+      cursor: not-allowed;
+      opacity: .7;
     }
 
     .cc-toggle-track {
@@ -445,8 +452,11 @@
 
   // ── HTML ────────────────────────────────────────────────────────────────────
   function getPrivacyLink() {
-    // Opens the hub homepage — Privacy Policy is accessible from the footer links there
-    return '/';
+    return '/?page=privacy';
+  }
+
+  function getTermsLink() {
+    return '/?page=terms';
   }
 
   function buildBannerHTML() {
@@ -457,9 +467,10 @@
           <div id="cc-text">
             <div id="cc-title">Cookies &amp; Privacy Choices</div>
             <p id="cc-desc">
-              This website uses cookies and similar technologies. Essential cookies are always active to keep the games running. 
+              This website uses cookies and similar technologies. Essential cookies are always active to keep the games running.
               With your consent, we also use analytics and advertising cookies to improve the site and show relevant ads.
-              <a href="${getPrivacyLink()}" target="_blank" rel="noopener">Privacy Policy</a>
+              <a href="${getPrivacyLink()}" target="_blank" rel="noopener">Privacy Policy</a> &amp;
+              <a href="${getTermsLink()}" target="_blank" rel="noopener">Terms &amp; Conditions</a>
             </p>
           </div>
           <div id="cc-buttons">
@@ -485,11 +496,11 @@
                 <div class="cc-cat-desc">Necessary for the website to function. These keep the games running, save your game state, and enable multiplayer rooms. Cannot be disabled.</div>
                 <span class="cc-required-badge">Always Active</span>
               </div>
-              <div class="cc-toggle">
-                <input type="checkbox" id="cc-chk-essential" checked disabled aria-label="Essential cookies, always active">
+              <label class="cc-toggle" aria-label="Essential cookies, always active">
+                <input type="checkbox" id="cc-chk-essential" checked disabled>
                 <div class="cc-toggle-track"></div>
                 <div class="cc-toggle-thumb"></div>
-              </div>
+              </label>
             </div>
 
             <!-- Analytics -->
@@ -498,11 +509,11 @@
                 <div class="cc-cat-name">Analytics</div>
                 <div class="cc-cat-desc">Help us understand how visitors use the site (e.g. pages visited, sessions). Data is anonymised and aggregated — no personal identifiers are tracked.</div>
               </div>
-              <div class="cc-toggle">
-                <input type="checkbox" id="cc-chk-analytics" aria-label="Analytics cookies">
+              <label class="cc-toggle" aria-label="Toggle analytics cookies">
+                <input type="checkbox" id="cc-chk-analytics">
                 <div class="cc-toggle-track"></div>
                 <div class="cc-toggle-thumb"></div>
-              </div>
+              </label>
             </div>
 
             <!-- Advertising -->
@@ -511,11 +522,11 @@
                 <div class="cc-cat-name">Advertising</div>
                 <div class="cc-cat-desc">Allow Google Ads to show relevant advertisements. These cookies may track your activity across websites to personalise ads shown to you.</div>
               </div>
-              <div class="cc-toggle">
-                <input type="checkbox" id="cc-chk-advertising" aria-label="Advertising cookies">
+              <label class="cc-toggle" aria-label="Toggle advertising cookies">
+                <input type="checkbox" id="cc-chk-advertising">
                 <div class="cc-toggle-track"></div>
                 <div class="cc-toggle-thumb"></div>
-              </div>
+              </label>
             </div>
 
           </div>
