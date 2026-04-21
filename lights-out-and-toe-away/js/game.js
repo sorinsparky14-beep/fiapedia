@@ -8,7 +8,19 @@ let GS={
   scores:{X:0,O:0},  // series round wins
   used:new Set(),over:false,
   drawOffer:null,     // "X" or "O" if one player offered draw
-  round:1
+  round:1,
+  roundStarter:"X"   // who started the current round — used to re-start draws
+}
+// ── RANDOM FIRST PLAYER ───────────────────────────────────────────────
+// Returns "X" or "O" with equal probability — used at the start of every round
+function randomStart(){ return Math.random() < 0.5 ? "X" : "O"; }
+// Returns who should start the NEXT round:
+//   draw  → same player who started this round (roundStarter)
+//   X won → O starts (loser starts)
+//   O won → X starts (loser starts)
+function nextRoundStarter(winnerP){
+  if(winnerP==="draw") return GS.roundStarter;
+  return winnerP==="X" ? "O" : "X";
 }
 // ── GAME MODE GLOBALS ─────────────────────────────────────────────────
 let GAME_MODE = "same";
@@ -359,16 +371,26 @@ function showResult(w){
   function advanceRound(){
     document.getElementById("res").classList.remove("on");
     cdEl.textContent="";
+    const fp=nextRoundStarter(w.p);
     if(GAME_MODE==="room"){
       const {rows,cols}=buildGrid();
       const rowIdxs=rows.map(r=>CATS.findIndex(c=>c.id===r.id));
       const colIdxs=cols.map(c=>CATS.findIndex(ca=>ca.id===c.id));
       const grid={rows:rowIdxs,cols:colIdxs};
-      broadcastMove({type: isSeries ? "new-series" : "next-round", grid});
-      if(isSeries){ GS.scores={X:0,O:0};GS.round=1; } else { GS.round++; }
-      newRoundBoard({rows:rowIdxs,cols:colIdxs});
+      if(isSeries){
+        // New series = fresh random start for both players
+        const seriesFp=randomStart();
+        broadcastMove({type:"new-series", grid, firstPlayer: seriesFp});
+        GS.scores={X:0,O:0};GS.round=1;
+        newRoundBoard({rows:rowIdxs,cols:colIdxs}, seriesFp);
+      } else {
+        // Next round = loser starts
+        broadcastMove({type:"next-round", grid, firstPlayer: fp});
+        GS.round++;
+        newRoundBoard({rows:rowIdxs,cols:colIdxs}, fp);
+      }
     } else {
-      if(isSeries) newSeries(); else nextRound();
+      if(isSeries) newSeries(); else nextRound(fp);
     }
   }
 
@@ -478,22 +500,24 @@ function addBotBadge(){
   badge.className="bot-badge";badge.textContent="";badge.style.display="none";
   p2el.insertAdjacentElement("afterend",badge);
 }
-function nextRound(){
+function nextRound(fp){
   GS.round++;
   if(_cpick._isCustom){
-    // Custom game: go back to category picker, keep scores
+    // Custom game: save next starter then go back to picker
+    _cpick.nextStarter = fp || null;
     cpickNewRound();
   } else {
-    newRoundBoard();
+    newRoundBoard(null, fp);
   }
 }
 function newSeries(){
   GS.scores={X:0,O:0};
   GS.round=1;
   if(_cpick._isCustom){
+    _cpick.nextStarter = null; // new series = fresh random start
     cpickNewRound();
   } else {
-    newRoundBoard();
+    newRoundBoard(); // no fp → randomStart() inside newRoundBoard
   }
 }
 function cpickNewRound(){
@@ -513,7 +537,7 @@ function cpickNewRound(){
   cpickUpdateHeader();
   cpickStartTurnTimer();
 }
-function newRoundBoard(prebuiltGrid){
+function newRoundBoard(prebuiltGrid, firstPlayer){
   let rows, cols;
   if(prebuiltGrid){
     rows = prebuiltGrid.rows.map(i=>CATS[i]);
@@ -523,7 +547,7 @@ function newRoundBoard(prebuiltGrid){
     rows = g.rows; cols = g.cols;
   }
   GS.board=Array(9).fill(null);GS.rows=rows;GS.cols=cols;
-  GS.cur="X";GS.used=new Set();GS.over=false;
+  GS.cur=firstPlayer||randomStart();GS.roundStarter=GS.cur;GS.used=new Set();GS.over=false;
   GS.drawOffer=null;drawPending=false;
   clearTimeout(drawCancelTimer); drawCancelTimer=null;
   clearResultCountdown();
@@ -714,6 +738,7 @@ window.addEventListener("popstate", function(e){
   if(id==="home" || isGameScreen || id==="custompicker"){
     stopTimer();
     stopHeartbeat();
+    clearTimeout(botThinkTimer); botThinkTimer=null;
     clearInterval(mmInterval); mmInterval=null;
     clearTimeout(mmFoundTimer); mmFoundTimer=null;
     clearTimeout(resCountdownTimer); resCountdownTimer=null;
@@ -917,7 +942,7 @@ function attachConn(conn){
   _conn=conn;
   let roomFull = false; // flag to suppress close handler on intentional room-full close
   conn.on("data", msg => {
-    if(msg.type==="start")          { startRoomGameAsGuest(msg.grid); }
+    if(msg.type==="start")          { startRoomGameAsGuest(msg.grid, msg.firstPlayer); }
     else if(msg.type==="bye")       { showDisconnect("Your friend has disconnected."); }
     else if(msg.type==="room-full") {
       roomFull = true;
@@ -1049,21 +1074,22 @@ function startRoomGame(){
   const {rows,cols}=buildGrid();
   const rowIdxs=rows.map(r=>CATS.findIndex(c=>c.id===r.id));
   const colIdxs=cols.map(c=>CATS.findIndex(ca=>ca.id===c.id));
-  broadcastMove({type:"start", grid:{rows:rowIdxs, cols:colIdxs}});
-  launchRoomGame(rows, cols);
+  const fp=randomStart();
+  broadcastMove({type:"start", grid:{rows:rowIdxs, cols:colIdxs}, firstPlayer:fp});
+  launchRoomGame(rows, cols, fp);
 }
 
-function startRoomGameAsGuest(grid){
+function startRoomGameAsGuest(grid, firstPlayer){
   const rows=grid.rows.map(i=>CATS[i]);
   const cols=grid.cols.map(i=>CATS[i]);
-  launchRoomGame(rows, cols);
+  launchRoomGame(rows, cols, firstPlayer);
 }
 
 // ── LAUNCH GAME (both sides) ──────────────────────────────────────────
-function launchRoomGame(rows,cols){
+function launchRoomGame(rows,cols,firstPlayer){
   GS.scores={X:0,O:0};GS.round=1;
   GS.board=Array(9).fill(null);GS.rows=rows;GS.cols=cols;
-  GS.cur="X";GS.used=new Set();GS.over=false;GS.drawOffer=null;drawPending=false;
+  GS.cur=firstPlayer||randomStart();GS.roundStarter=GS.cur;GS.used=new Set();GS.over=false;GS.drawOffer=null;drawPending=false;
   removeBotBadge();
   document.getElementById("res").classList.remove("on");
   showS("game", GAME_MODE!=="room");renderGrid();renderScore();renderUsed();
@@ -1131,12 +1157,12 @@ function applyRoomMove(move){
     document.getElementById("res").classList.remove("on");
     document.getElementById("res-countdown").textContent="";
     GS.round++;
-    newRoundBoard(move.grid);
+    newRoundBoard(move.grid, move.firstPlayer);
   } else if(move.type==="new-series"){
     document.getElementById("res").classList.remove("on");
     document.getElementById("res-countdown").textContent="";
     GS.scores={X:0,O:0};GS.round=1;
-    newRoundBoard(move.grid);
+    newRoundBoard(move.grid, move.firstPlayer);
   }
 }
 
@@ -1185,6 +1211,7 @@ function handleLogoClick(){
 function goHome(){
   stopTimer();
   cpickStopTimer(); // fix: stop custom picker timer if active
+  clearTimeout(botThinkTimer); botThinkTimer=null;
   _cpick._isCustom = false; // reset custom flag
   clearTimeout(resCountdownTimer); resCountdownTimer=null;
   clearInterval(cdInterval); cdInterval=null;
@@ -1301,14 +1328,15 @@ let _cpick = {
   activeIdx: null,
   turn: 0,           // 0..5, increments each pick; player = turn%2==0 ? P1 : P2
   timerInterval: null,
-  timerLeft: 60
+  timerLeft: 60,
+  nextStarter: null  // firstPlayer for next game round (null = randomize)
 };
 
 function startCustomPicker(){
   GAME_MODE = "same";
   P1_LABEL = "Player 1"; P2_LABEL = "Player 2";
   GS.scores={X:0,O:0}; GS.round=1; // reset series on fresh start
-  _cpick = {rows:[null,null,null], cols:[null,null,null], tab:'team', activeType:null, activeIdx:null, turn:0, consecutiveSkips:0, timerInterval:null, timerLeft:60, _isCustom:true};
+  _cpick = {rows:[null,null,null], cols:[null,null,null], tab:'team', activeType:null, activeIdx:null, turn:0, consecutiveSkips:0, timerInterval:null, timerLeft:60, _isCustom:true, nextStarter:null};
   showS('custompicker');
   cpickRenderVisualGrid();
   cpickUpdateHeader();
@@ -1643,7 +1671,8 @@ function cpickStartGame(){
   P1_LABEL = "Player 1"; P2_LABEL = "Player 2";
   GS.board=Array(9).fill(null);
   GS.rows=rows; GS.cols=cols;
-  GS.cur="X"; GS.used=new Set(); GS.over=false;
+  GS.cur=(_cpick.nextStarter||randomStart()); GS.roundStarter=GS.cur; GS.used=new Set(); GS.over=false;
+  _cpick.nextStarter=null; // consumed
   // Keep scores & round across custom game rounds; reset only on fresh start
   if(!_cpick._isCustom){
     GS.scores={X:0,O:0}; GS.round=1;
