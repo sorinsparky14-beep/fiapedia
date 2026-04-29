@@ -1,6 +1,3 @@
-/* Lights Out & Toe Away — Styles */
-
-
 :root{--red:#E10600;--rg:rgba(225,6,0,.4);--gold:#FFD700;--blue:#00BFFF;--bg:rgba(0,191,255,.4);--green:#00e676;--purple:#b388ff;--orange:#ff9100;--dark:#0a0a0f;--s1:#16161f;--s2:#1e1e2a;--bd:#2a2a3a;--t1:#f0f0f8;--t2:#888899;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
@@ -19,7 +16,6 @@ header{display:flex;align-items:center;justify-content:center;padding:12px 20px;
 .tag{font-size:25px;font-family:"Teko",sans-serif;font-weight:600;letter-spacing:2px;color:var(--t2);border:1px solid var(--bd);padding:2px 7px;border-radius:2px;text-transform:uppercase;}
 .scr{display:none;} .scr.on{display:block;}
 
-/* HOME */
 #home{flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 60px);padding:24px 16px;gap:18px;text-align:center;position:relative;}
 #home.on{display:flex;}
 #home > *{position:relative;z-index:1;}
@@ -29,7 +25,6 @@ header{display:flex;align-items:center;justify-content:center;padding:12px 20px;
 .pills{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;max-width:540px;}
 .pill{display:inline-flex;align-items:center;gap:4px;background:var(--s1);border:1px solid var(--bd);padding:3px 9px;font-size:21px;font-weight:600;color:#6a5520;}
 
-/* BTNS */
 .bgrp{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
 .btn{font-family:"Teko",sans-serif;font-size:25px;font-weight:700;letter-spacing:2px;padding:11px 24px;border:none;cursor:pointer;text-transform:uppercase;transition:all .2s;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);}
 .btn-p{background:var(--red);color:#fff;box-shadow:0 4px 18px var(--rg);}
@@ -40,7 +35,6 @@ header{display:flex;align-items:center;justify-content:center;padding:12px 20px;
 .back{background:none;border:none;cursor:pointer;font-family:"Teko",sans-serif;font-size:19px;letter-spacing:2px;color:var(--t2);text-transform:uppercase;display:flex;align-items:center;gap:5px;}
 .back:hover{color:var(--t1);}
 
-/* GAME */
 #game{max-width:900px;margin:0 auto;padding:12px 10px 40px;}
 .gh{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
 .sb{display:flex;align-items:center;gap:12px;background:var(--s1);border:1px solid var(--bd);padding:7px 16px;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);}
@@ -53,7 +47,6 @@ header{display:flex;align-items:center;justify-content:center;padding:12px 20px;
 .ti-x{background:rgba(225,6,0,.15);color:var(--red);border:1px solid var(--red);}
 .ti-o{background:rgba(0,191,255,.15);color:var(--blue);border:1px solid var(--blue);}
 
-/* GRID */
 .gw{display:grid;grid-template-columns:1fr repeat(3,1fr);grid-template-rows:auto repeat(3,1fr);gap:3px;max-width:780px;margin:0 auto;}
 .corner{display:flex;align-items:center;justify-content:center;min-height:88px;width:100%;}
 .corner svg{opacity:.1;}
@@ -73,7 +66,6 @@ header{display:flex;align-items:center;justify-content:center;padding:12px 20px;
 .b-wild{background:rgba(255,145,0,.12);border:1px solid rgba(255,145,0,.3);color:var(--orange);}
 .b-tm{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:var(--t2);}
 
-/* CELLS */
 .cell{background:var(--s1);border:1px solid var(--bd);cursor:pointer;display:flex;align-items:center;justify-content:center;min-height:100px;position:relative;transition:all .2s;overflow:hidden;}
 .gw.turn-x .cell:hover:not(.taken){border-color:var(--red);background:var(--s2);box-shadow:inset 0 0 20px rgba(225,6,0,.07);}
 .gw.turn-o .cell:hover:not(.taken){border-color:var(--blue);background:var(--s2);box-shadow:inset 0 0 20px rgba(0,191,255,.07);}
@@ -90,11 +82,9 @@ header{display:flex;align-items:center;justify-content:center;padding:12px 20px;
 .cell.wo{background:rgba(0,191,255,.13);border-color:var(--blue);}
 @keyframes pop{0%{transform:scale(0) rotate(-15deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
 
-/* USED BAR - hidden, kept for JS compatibility */
 .ub{display:none !important;}
 .ut{display:none !important;}
 
-/* MODAL */
 .ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.86);z-index:100;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
 .ov.on{display:flex;}
 .modal{background:#111118;border:1px solid var(--bd);width:92%;max-width:480px;clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%);animation:mi .18s ease-out;overflow:visible;}
@@ -121,7 +111,6 @@ header{display:flex;align-items:center;justify-content:center;padding:12px 20px;
 .ma{display:flex;gap:9px;margin-top:11px;justify-content:flex-end;}
 .err{color:var(--red);font-size:21px;font-weight:600;margin-top:7px;min-height:15px;}
 
-/* RESULT */
 #res{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(6px);flex-direction:column;gap:16px;}
 #res.on{display:flex;}
 .rt{font-size:80px;animation:tb .5s cubic-bezier(.175,.885,.32,1.275);}
@@ -132,7 +121,6 @@ header{display:flex;align-items:center;justify-content:center;padding:12px 20px;
 .rtt.dr{color:var(--gold);}
 .rs{font-size:19px;color:var(--t2);letter-spacing:2px;text-transform:uppercase;}
 
-/* HOWTO */
 #howto{max-width:640px;margin:0 auto;padding:28px 18px;}
 .hwt{font-family:"Teko",sans-serif;font-size:25px;font-weight:900;margin-bottom:16px;color:var(--red);letter-spacing:2px;}
 .hs{display:flex;gap:13px;margin-bottom:14px;}
@@ -144,10 +132,8 @@ header{display:flex;align-items:center;justify-content:center;padding:12px 20px;
 .cchips{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px;}
 .cc{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;font-size:21px;font-weight:600;}
 
-/* 580px block removed - consolidated below */
 ::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-thumb{background:var(--bd);}
 
-/* TIMER */
 .timer-wrap{display:flex;flex-direction:column;align-items:center;gap:3px;}
 .timer-ring{position:relative;width:52px;height:52px;}
 .timer-ring svg{transform:rotate(-90deg);}
@@ -156,7 +142,6 @@ header{display:flex;align-items:center;justify-content:center;padding:12px 20px;
 .timer-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:"Teko",sans-serif;font-size:19px;font-weight:900;}
 .timer-lbl{font-size:23px;letter-spacing:2px;color:var(--t2);text-transform:uppercase;font-family:"Teko",sans-serif;}
 
-/* SCORE TABLE */
 .score-table{display:flex;align-items:stretch;gap:0;background:var(--s1);border:1px solid var(--bd);overflow:hidden;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);}
 .st-player{display:flex;flex-direction:column;align-items:center;padding:8px 16px;gap:4px;min-width:80px;}
 .st-player.x-side{border-right:1px solid var(--bd);}
@@ -172,27 +157,20 @@ header{display:flex;align-items:center;justify-content:center;padding:12px 20px;
 .st-vs{font-family:"Teko",sans-serif;font-size:21px;font-weight:900;color:var(--t2);}
 .st-round{font-size:19px;color:var(--t2);letter-spacing:1px;text-transform:uppercase;}
 
-/* GAME HEADER reworked */
 .gh{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
 .gh-left{display:flex;align-items:center;gap:10px;}
 .gh-right{display:flex;align-items:center;gap:8px;}
 
-/* ACTION BUTTONS under grid */
 .action-bar{display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap;}
 
-/* TURN FLASH */
 @keyframes turnFlash{0%{opacity:.4}50%{opacity:1}100%{opacity:.4}}
 .ti.flash{animation:turnFlash .5s ease;}
 
-/* MISTAKE FLASH */
 .cell.mistake{animation:mistakeFlash .5s ease;}
 @keyframes mistakeFlash{0%{background:rgba(225,6,0,.35)}100%{background:var(--s1)}}
 
-/* SERIES WIN banner extra */
 .series-won{font-size:23px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-top:-8px;}
 
-
-/* ── GAME MODE SELECTION ─────────────────────────────────────────────── */
 .mode-grid{display:flex;gap:14px;flex-wrap:nowrap;justify-content:center;max-width:800px;}
 .mode-card{
   display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
@@ -214,7 +192,6 @@ header{display:flex;align-items:center;justify-content:center;padding:12px 20px;
 .mode-friend .mode-name{color:var(--gold);}
 .mode-online .mode-name{color:var(--green);}
 
-/* ── ROOM LOBBY ──────────────────────────────────────────────────────── */
 #roomlobby,#roomcreated{
   flex-direction:column;align-items:center;
   min-height:calc(100vh - 60px);padding:24px 16px;
@@ -239,7 +216,6 @@ header{display:flex;align-items:center;justify-content:center;padding:12px 20px;
 .lobby-join-btn{padding:12px 20px;font-size:21px;white-space:nowrap;}
 .lobby-error{font-size:17px;color:var(--red);min-height:16px;letter-spacing:1px;}
 
-/* ── ROOM CREATED CARD ───────────────────────────────────────────────── */
 .roomcard{
   width:100%;background:var(--s1);border:1px solid rgba(255,215,0,.25);
   padding:24px;display:flex;gap:20px;align-items:flex-start;
@@ -257,7 +233,6 @@ header{display:flex;align-items:center;justify-content:center;padding:12px 20px;
 .waiting-dot:nth-child(3){animation-delay:.4s;}
 @keyframes wdot{0%,80%,100%{opacity:.2;transform:scale(.8);}40%{opacity:1;transform:scale(1.1);}}
 
-/* ── BOT INDICATOR IN GAME ───────────────────────────────────────────── */
 .bot-badge{
   display:inline-flex;align-items:center;gap:4px;
   font-family:"Teko",sans-serif;font-size:25px;letter-spacing:2px;font-weight:700;
@@ -270,12 +245,11 @@ header{display:flex;align-items:center;justify-content:center;padding:12px 20px;
   .roomcard-qr{width:140px;height:140px;}
 }
 
-/* ── MOBILE / TABLET GAME GRID ───────────────────────────────────────── */
 @media(max-width:768px){
-  /* Tighten game screen padding */
+  
   #game-same,#game-bot,#game-room,#custompicker{padding:6px 4px 32px;overflow-x:hidden;}
 
-  /* Game header */
+  
   .gh{margin-bottom:8px;gap:6px;flex-wrap:nowrap;align-items:center;}
   .gh-left,.gh-right{gap:6px;}
   .st-player{padding:5px 8px;min-width:60px;}
@@ -289,10 +263,10 @@ header{display:flex;align-items:center;justify-content:center;padding:12px 20px;
   .timer-num{font-size:15px;}
   .timer-lbl{font-size:13px;letter-spacing:1px;}
 
-  /* Grid — narrower column for row labels */
+  
   .gw{grid-template-columns:72px repeat(3,1fr);gap:2px;}
 
-  /* Category label cells */
+  
   .cl{min-height:72px;padding:3px 2px;gap:2px;}
   .corner{min-height:72px;}
   .cl-pt{width:28px;height:28px;}
@@ -302,27 +276,23 @@ header{display:flex;align-items:center;justify-content:center;padding:12px 20px;
   .cl-tx{font-size:11px;letter-spacing:0;line-height:1.2;}
   .badge{font-size:13px;padding:1px 3px;letter-spacing:.3px;}
 
-  /* Play cells */
+  
   .cell{min-height:72px;}
   .cm{font-size:24px;}
   .cd{font-size:11px;max-width:60px;}
   .ce{width:20px;height:20px;}
 
-  /* Used bar */
+  
   .ub{font-size:19px;}
   .ut{padding:1px 4px;margin:1px;}
 
-  /* Action buttons */
+  
   .action-bar{gap:5px;margin-top:6px;}
   .btn-sm{font-size:15px;padding:6px 10px;}
 }
 
-/* ── SMALL PHONES (≤420px) — main mobile fix ─────────────────────────── */
-/* 420px block moved to consolidated section below */
-
 .res-countdown{font-family:"Teko",sans-serif;font-size:25px;letter-spacing:2px;color:var(--t2);margin-top:8px;text-align:center;}
 
-/* ── OVERFLOW-X FIX — prevent horizontal scroll on all devices ─────── */
 html {
   overflow-x: hidden;
 }
@@ -339,7 +309,7 @@ body {
   max-width: 100%;
   box-sizing: border-box;
 }
-/* Ensure grid never overflows on small screens */
+
 @media (max-width: 600px) {
   .gw {
     width: 100%;
@@ -370,7 +340,6 @@ body {
   }
 }
 
-/* ── INFO FOOTER MOBILE FIX ────────────────────────────────────────── */
 #info-footer { background: transparent !important; position: relative; }
 #info-footer > div {
   width: 100%;
@@ -393,18 +362,15 @@ body {
   }
 }
 
-/* ── BACKGROUND: static dark + red corners, fixed so it covers everything ── */
-/* ── BACKGROUND — solid base on html/body prevents black flash on scroll ── */
 html {
   min-height: 100%;
-  background: #0a0a0f; /* solid fallback — no fixed attachment on mobile */
+  background: #0a0a0f; 
 }
 body {
   background: #0a0a0f;
   min-height: 100%;
 }
 
-/* ── STATIC BACKGROUND LAYER (fixed div — reliable on iOS/Android) ───── */
 #bg-layer {
   position: fixed;
   inset: 0;
@@ -417,20 +383,19 @@ body {
     repeating-linear-gradient(-45deg,transparent,transparent 60px,rgba(225,6,0,.015) 60px,rgba(225,6,0,.015) 62px),
     #0a0a0f;
 }
-/* Everything above the bg-layer */
+
 header, #app > .scr, #app > * {
   position: relative;
   z-index: 1;
 }
 
-/* ── GAME SCREEN CENTERING ──────────────────────────────────────────── */
 #game-same, #game-bot, #game-room {
   max-width: 900px;
   margin: 0 auto;
   padding: 12px 16px 40px;
   box-sizing: border-box;
 }
-/* Action bar centrat si vizibil */
+
 .action-bar {
   display: flex;
   gap: 8px;
@@ -439,11 +404,7 @@ header, #app > .scr, #app > * {
   flex-wrap: wrap;
   padding: 0 8px;
 }
-/* .ub removed - no used bar */
 
-/* duplicate 768px block removed - consolidated below */
-
-/* ── CUSTOM GAME PICKER ──────────────────────────────────────────────── */
 .mode-custom:hover{border-color:var(--purple);}
 .mode-custom .mode-name{color:var(--purple);}
 
@@ -453,27 +414,22 @@ header, #app > .scr, #app > * {
 
 .cpick-wrap{max-width:560px;margin:0 auto;padding:16px 14px;}
 
-/* ── Slot add button inside .cl cells ── */
 .cpick-slot-add{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;gap:4px;}
 .cpick-plus{font-size:28px;color:var(--t2);line-height:1;}
 .cpick-add-label{font-size:16px;letter-spacing:2px;color:var(--t2);font-weight:700;font-family:"Teko",sans-serif;}
 
-/* col/row cells clickable & hoverable */
 .cpick-col-cell,.cpick-row-cell{cursor:pointer;transition:background .18s,border-color .18s;}
 .cpick-col-cell:hover,.cpick-row-cell:hover{background:var(--s2)!important;}
 .cpick-col-cell.filled,.cpick-row-cell.filled{cursor:pointer;}
 .cpick-col-cell.filled:hover,.cpick-row-cell.filled:hover{opacity:.85;}
 
-/* Active slot — all empty slots pulse to show they're clickable */
 .cpick-active-slot{border:2px solid var(--bd)!important;cursor:pointer;}
 .cpick-active-slot:hover{border-color:var(--red)!important;background:var(--s2)!important;}
 .cpick-active-slot .cpick-plus{color:var(--t2);}
 .cpick-active-slot .cpick-add-label{color:var(--t2);}
 
-/* game cells in picker — dimmed, not clickable */
 .cpick-game-cell{cursor:default;opacity:.45;}
 
-/* Filled slot content (reuse .cl structure) */
 .cpick-slot-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:4px;width:100%;height:100%;position:relative;}
 .cpick-slot-img{object-fit:contain;}
 .cpick-slot-img.portrait{width:42px;height:42px;border-radius:50%;object-fit:cover;object-position:top;}
@@ -484,7 +440,6 @@ header, #app > .scr, #app > * {
 .cpick-slot-x{position:absolute;top:3px;right:5px;font-size:14px;color:var(--t2);line-height:1;z-index:2;cursor:pointer;}
 .cpick-slot-x:hover{color:var(--red);}
 
-/* ── PANEL MODAL (small centered popup) ── */
 .cpick-panel{
   position:fixed;inset:0;
   display:none;align-items:center;justify-content:center;
@@ -503,13 +458,11 @@ header, #app > .scr, #app > * {
 .cpick-panel-close{background:transparent;border:1px solid var(--bd);color:var(--t2);font-size:18px;padding:4px 10px;cursor:pointer;font-family:"Teko",sans-serif;}
 .cpick-panel-close:hover{color:var(--red);border-color:var(--red);}
 
-/* Tabs */
 .cpick-tabs{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin:4px 0 8px;border-bottom:1px solid var(--bd);padding:0 12px 8px;flex-shrink:0;}
 .cpick-tab{font-family:"Teko",sans-serif;font-size:19px;font-weight:700;letter-spacing:1px;padding:3px 10px;background:transparent;border:1px solid transparent;color:var(--t2);cursor:pointer;transition:all .15s;text-transform:uppercase;}
 .cpick-tab:hover{color:var(--t1);border-color:var(--bd);}
 .cpick-tab.active{color:var(--purple);border-color:var(--purple);background:rgba(179,136,255,.08);}
 
-/* Category grid */
 .cpick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;overflow-y:auto;padding:4px 12px 16px;flex:1;}
 .cpick-card{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -526,20 +479,9 @@ header, #app > .scr, #app > * {
 .cpick-card-img.portrait{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:top;}
 .cpick-card-label{font-size:15px;font-weight:700;color:var(--t2);letter-spacing:.3px;line-height:1.2;text-transform:uppercase;}
 
-/* panel backdrop - handled by panel itself */
-
-/* 500px cpick block removed - consolidated below */
-
-/* ═══════════════════════════════════════════════════════════════════════
-   CONSOLIDATED MOBILE STYLES — ordered largest to smallest so small
-   screens always win (each block overrides the one above it)
-   ═══════════════════════════════════════════════════════════════════════ */
-
-/* ── ≤768px (tablets & large phones) ─────────────────────────────────── */
-/* ── ≤480px (most Android phones) ────────────────────────────────────── */
 @media(max-width:480px){
   #game-same,#game-bot,#game-room,#custompicker{padding:4px 3px 22px;}
-  /* Single-row header */
+  
   .gh{flex-direction:row;align-items:center;justify-content:space-between;gap:4px;margin-bottom:5px;flex-wrap:nowrap;}
   .gh-left{flex:1;min-width:0;}
   .gh-right{display:flex;flex-direction:row;align-items:center;gap:5px;flex-shrink:0;}
@@ -560,20 +502,19 @@ header, #app > .scr, #app > * {
   .cell{min-height:65px;} .cm{font-size:20px;} .cd{font-size:10px;max-width:50px;} .ce{width:18px;height:18px;}
   .action-bar{gap:3px;margin-top:4px;}
   .btn-sm{font-size:12px;padding:5px 6px;}
-  /* cpick panel */
+  
   .cpick-tabs{gap:3px;padding:0 6px 6px;}
   .cpick-tab{font-size:14px;padding:2px 6px;}
   .cpick-grid{grid-template-columns:repeat(3,1fr);gap:5px;padding:4px 6px 12px;}
   .cpick-card{min-height:75px;padding:6px 3px;}
   .cpick-card-label{font-size:12px;}
-  /* mode cards */
+  
   .mode-grid{gap:6px;flex-wrap:wrap;}
   .mode-card{width:calc(50% - 3px);min-height:110px;padding:14px 8px;}
   .mode-img{width:40px;height:40px;}
   .mode-name{font-size:18px;letter-spacing:1px;} .mode-desc{font-size:15px;}
 }
 
-/* ── ≤380px (very small phones) ──────────────────────────────────────── */
 @media(max-width:380px){
   .ti{font-size:11px;padding:2px 4px;}
   .timer-ring{width:30px;height:30px;} .timer-ring svg{width:30px;height:30px;}
@@ -584,3 +525,4 @@ header, #app > .scr, #app > * {
   .cell{min-height:60px;} .cm{font-size:18px;}
   .btn-sm{font-size:11px;padding:4px 5px;}
 }
+html::-webkit-scrollbar{width:6px}html::-webkit-scrollbar-track{background:#050507}html::-webkit-scrollbar-thumb{background:#e8002d;border-radius:3px}html::-webkit-scrollbar-thumb:hover{background:#9b001e}html{scrollbar-width:thin;scrollbar-color:#e8002d #050507}
