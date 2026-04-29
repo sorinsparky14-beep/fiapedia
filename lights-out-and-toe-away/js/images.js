@@ -1,8 +1,3 @@
-// Lights Out & Toe Away — Image References
-// All paths are relative to the ROOT of the site (where index.html lives)
-// Folder structure: public/assets/media/{category}/
-
-// ── TEAMS (21 team categories) ────────────────────────────────────────
 const IMG_TEAM_SAUBER         = "/lights-out-and-toe-away/public/teams/sauber.png";
 const IMG_TEAM_ALFA_ROMEO     = "/lights-out-and-toe-away/public/teams/alfa_romeo.png";
 const IMG_TEAM_MINARDI        = "/lights-out-and-toe-away/public/teams/minardi.png";
@@ -25,7 +20,6 @@ const IMG_TEAM_ASTON          = "/lights-out-and-toe-away/public/teams/aston_mar
 const IMG_TEAM_HAAS           = "/lights-out-and-toe-away/public/teams/haas.png";
 const IMG_TEAM_BRABHAM        = "/lights-out-and-toe-away/public/teams/brabham.png";
 
-// ── NATIONALITIES (20 nationality flag categories) ────────────────────
 const IMG_FLAG_BRITISH        = "/lights-out-and-toe-away/public/nationalities/british.png";
 const IMG_FLAG_GERMAN         = "/lights-out-and-toe-away/public/nationalities/german.png";
 const IMG_FLAG_BRAZILIAN      = "/lights-out-and-toe-away/public/nationalities/brazilian.png";
@@ -47,7 +41,6 @@ const IMG_FLAG_SWEDISH        = "/lights-out-and-toe-away/public/nationalities/s
 const IMG_FLAG_JAPANESE       = "/lights-out-and-toe-away/public/nationalities/japanese.png";
 const IMG_FLAG_SWISS          = "/lights-out-and-toe-away/public/nationalities/swiss.png";
 
-// ── CIRCUITS (29 circuit categories) ─────────────────────────────────
 const IMG_CIRC_MONACO         = "/lights-out-and-toe-away/public/circuits/circuit_monaco.png";
 const IMG_CIRC_BELGIUM        = "/lights-out-and-toe-away/public/circuits/circuit_belgium.png";
 const IMG_CIRC_ITALY          = "/lights-out-and-toe-away/public/circuits/circuit_italy.png";
@@ -78,7 +71,6 @@ const IMG_CIRC_USA_FLAG       = "/lights-out-and-toe-away/public/circuits/circui
 const IMG_CIRC_FRANCE         = "/lights-out-and-toe-away/public/circuits/circuit_france.png";
 const IMG_CIRC_MEXICO         = "/lights-out-and-toe-away/public/circuits/circuit_mexico.png";
 
-// ── TEAM PRINCIPALS (17 boss categories) ─────────────────────────────
 const IMG_TP_ROSS_BRAWN        = "/lights-out-and-toe-away/public/team principals/ross_brawn.png";
 const IMG_TP_TOTO_WOLFF        = "/lights-out-and-toe-away/public/team principals/toto_wolff.png";
 const IMG_TP_CHRISTIAN_HORNER  = "/lights-out-and-toe-away/public/team principals/christian_horner.png";
@@ -97,7 +89,6 @@ const IMG_TP_BERNIE_ECCLESTONE = "/lights-out-and-toe-away/public/team principal
 const IMG_TP_KEN_TYRRELL       = "/lights-out-and-toe-away/public/team principals/ken_tyrell.png";
 const IMG_TP_GIANCARLO_MINARDI = "/lights-out-and-toe-away/public/team principals/giancarlo_minardi.png";
 
-// ── TEAMMATES (15 driver portrait categories) ─────────────────────────
 const IMG_GRAHAM_HILL         = "/lights-out-and-toe-away/public/teammates/graham_hill.png";
 const IMG_ALONSO              = "/lights-out-and-toe-away/public/teammates/fernando_alonso.png";
 const IMG_HAMILTON            = "/lights-out-and-toe-away/public/teammates/lewis_hamilton.png";
@@ -114,8 +105,6 @@ const IMG_SENNA               = "/lights-out-and-toe-away/public/teammates/ayrto
 const IMG_PROST               = "/lights-out-and-toe-away/public/teammates/alain_prost.png";
 const IMG_MANSELL             = "/lights-out-and-toe-away/public/teammates/nigel_mansell.png";
 
-// ── WILDCARDS (trophies + eras + born decades + continents) ──────────
-// Trophy categories
 const IMG_WILD_CHAMPIONS      = "/lights-out-and-toe-away/public/wildcards/champions.png";
 const IMG_WILD_TITLES         = "/lights-out-and-toe-away/public/wildcards/titles.png";
 const IMG_WILD_RACE_WINS      = "/lights-out-and-toe-away/public/wildcards/race_wins.png";
@@ -124,7 +113,7 @@ const IMG_WILD_POLE           = "/lights-out-and-toe-away/public/wildcards/poles
 const IMG_WILD_TEAMS          = "/lights-out-and-toe-away/public/wildcards/teams_trophy.png";
 const IMG_WILD_CIRCUITS       = "/lights-out-and-toe-away/public/wildcards/circuits_trophy.png";
 const IMG_ERA_GRAND_SLAM      = "/lights-out-and-toe-away/public/wildcards/era_grand_slam.png";
-// Era categories
+
 const IMG_ERA_1950_70         = "/lights-out-and-toe-away/public/wildcards/era_1950_70.png";
 const IMG_ERA_1970_80         = "/lights-out-and-toe-away/public/wildcards/era_1970_80.png";
 const IMG_ERA_1980_90         = "/lights-out-and-toe-away/public/wildcards/era_1980_90.png";
@@ -132,14 +121,14 @@ const IMG_ERA_1990_00         = "/lights-out-and-toe-away/public/wildcards/era_1
 const IMG_ERA_2000_10         = "/lights-out-and-toe-away/public/wildcards/era_2000_10.png";
 const IMG_ERA_2010_20         = "/lights-out-and-toe-away/public/wildcards/era_2010_20.png";
 const IMG_ERA_ACTIVE2020      = "/lights-out-and-toe-away/public/wildcards/era_active_2020.png";
-// Born decade categories
+
 const IMG_BORN_2000S          = "/lights-out-and-toe-away/public/wildcards/born_2000s.png";
 const IMG_BORN_1990S          = "/lights-out-and-toe-away/public/wildcards/born_1990s.png";
 const IMG_BORN_1980S          = "/lights-out-and-toe-away/public/wildcards/born_1980s.png";
 const IMG_BORN_1970S          = "/lights-out-and-toe-away/public/wildcards/born_1970s.png";
 const IMG_BORN_1960S          = "/lights-out-and-toe-away/public/wildcards/born_1960s.png";
 const IMG_BORN_1950S          = "/lights-out-and-toe-away/public/wildcards/born_1950s.png";
-// Continent categories
+
 const IMG_CONT_EUROPE         = "/lights-out-and-toe-away/public/wildcards/continent_europe.png";
 const IMG_CONT_NORTH_AMERICA  = "/lights-out-and-toe-away/public/wildcards/continent_north_america.png";
 const IMG_CONT_SOUTH_AMERICA  = "/lights-out-and-toe-away/public/wildcards/continent_south_america.png";
