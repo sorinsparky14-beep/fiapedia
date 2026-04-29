@@ -486,11 +486,11 @@ header, #app > .scr, #app > * {
   .gh-left{flex:1;min-width:0;}
   .gh-right{display:flex;flex-direction:row;align-items:center;gap:5px;flex-shrink:0;}
   .score-table{clip-path:none;}
-  .st-player{padding:3px 5px;min-width:0;flex:1;overflow:hidden;}
-  .st-name{font-size:11px;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
-  .st-middle{padding:3px 5px;}
-  .st-vs{font-size:13px;} .st-round{font-size:11px;}
-  .pip{width:8px;height:8px;} .st-pips{gap:2px;}
+  .st-player{padding:3px 3px;min-width:0;flex:1;overflow:hidden;}
+  .st-name{font-size:10px;letter-spacing:0;white-space:nowrap;overflow:visible;max-width:none;}
+  .st-middle{padding:3px 2px;}
+  .st-vs{font-size:11px;} .st-round{font-size:9px;letter-spacing:0;}
+  .st-pips{gap:1px;}
   .timer-wrap{gap:1px;}
   .timer-ring{width:36px;height:36px;} .timer-ring svg{width:36px;height:36px;}
   .timer-num{font-size:12px;} .timer-lbl{font-size:10px;letter-spacing:0;}
@@ -519,7 +519,8 @@ header, #app > .scr, #app > * {
   .ti{font-size:11px;padding:2px 4px;}
   .timer-ring{width:30px;height:30px;} .timer-ring svg{width:30px;height:30px;}
   .timer-num{font-size:10px;} .timer-lbl{font-size:9px;}
-  .st-name{font-size:11px;}
+  .st-name{font-size:9px;letter-spacing:0;}
+  .st-middle{padding:2px 1px;}
   .gw{grid-template-columns:55px repeat(3,1fr);gap:1px;}
   .cl{min-height:60px;} .corner{min-height:60px;}
   .cell{min-height:60px;} .cm{font-size:18px;}
