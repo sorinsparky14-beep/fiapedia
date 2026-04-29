@@ -1,5 +1,3 @@
-// Lights Out & Toe Away — Driver Database — Updated 2025/2026
-
 const DB = [
   {name:"Michael Schumacher",teams:["Jordan","Benetton","Ferrari","Mercedes"],nat:"german",champ:true,champN:7,wins:91,decades:[1990,2000,2010],teamN:4,circuits:{monte_carlo:5,spa:6,monza:5,suzuka:6,silverstone:3,montreal:7,interlagos:4,sakhir:1,barcelona:6,hungaroring:4,albert_park:4,sepang:3,hockenheim:4,nurburgring:5,estoril:1,buenos_aires:1,shanghai:1,magny_cours:8,red_bull_ring:2},contWins:{eu:49,na:7,sa:5,as:11,oc:4,af:0},gSlam:5,poles:68,fastLaps:77,birthY:1969,tps:["Ross Brawn","Jean Todt","Flavio Briatore","Eddie Jordan"]},
   {name:"Lewis Hamilton",teams:["McLaren","Mercedes","Ferrari"],nat:"british",champ:true,champN:7,wins:105,decades:[2000,2010,2020],teamN:3,circuits:{monte_carlo:3,spa:5,monza:5,suzuka:4,silverstone:9,montreal:7,interlagos:3,marina_bay:4,austin:5,yas_marina:5,baku:1,sakhir:5,barcelona:6,hungaroring:8,albert_park:2,sepang:1,shanghai:6,paul_ricard:2,red_bull_ring:2,mexico:2},contWins:{eu:40,na:14,sa:3,as:26,oc:2,af:0},gSlam:6,poles:104,fastLaps:68,birthY:1985,tps:["Ron Dennis","Ross Brawn","Toto Wolff","Fred Vasseur"]},
@@ -202,4 +200,3 @@ const DB = [
   {name:"Tiago Monteiro",teams:["Jordan"],nat:"portuguese",champ:false,champN:0,wins:0,decades:[2000],teamN:1,circuits:{},contWins:{eu:0,na:0,sa:0,as:0,oc:0,af:0},gSlam:false,poles:false,fastLaps:0,birthY:1976,tps:[]},
   {name:"Eitel Cantoni",teams:[],nat:"uruguayan",champ:false,champN:0,wins:0,decades:[1950],teamN:0,circuits:{},contWins:{eu:0,na:0,sa:0,as:0,oc:0,af:0},gSlam:false,poles:false,fastLaps:0,birthY:1906,tps:[]}
 ];
-// ── CATEGORY DEFINITIONS ───────────────────────────────────────────────────
