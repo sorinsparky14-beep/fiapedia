@@ -1,7 +1,5 @@
-// Lights Out & Toe Away — Category Definitions + Grid Builder
-
 const CATS = [
-  // TEAMS
+  
   {id:"sauber",g:"team",label:"Drove for\nSauber",img:IMG_TEAM_SAUBER,carImg:true,badge:"b-team",check:d=>d.teams.includes("Sauber")},
   {id:"alfa_romeo",g:"team",label:"Drove for\nAlfa Romeo",img:IMG_TEAM_ALFA_ROMEO,carImg:true,badge:"b-team",check:d=>d.teams.includes("Alfa Romeo")},
   {id:"minardi",g:"team",label:"Drove for\nMinardi",img:IMG_TEAM_MINARDI,carImg:true,badge:"b-team",check:d=>d.teams.includes("Minardi")},
@@ -23,7 +21,7 @@ const CATS = [
   {id:"aston",g:"team",label:"Drove for\nAston Martin",img:IMG_TEAM_ASTON,carImg:true,badge:"b-team",check:d=>d.teams.includes("Aston Martin")},
   {id:"haas",g:"team",label:"Drove for\nHaas",img:IMG_TEAM_HAAS,carImg:true,badge:"b-team",check:d=>d.teams.includes("Haas")},
   {id:"brabham",g:"team",label:"Drove for\nBrabham",img:IMG_TEAM_BRABHAM,carImg:true,badge:"b-team",check:d=>d.teams.includes("Brabham")},
-  // NATIONALITIES
+  
   {id:"nat-brit",g:"nat",label:"British\nDriver",img:IMG_FLAG_BRITISH,flagImg:true,badge:"b-nat",check:d=>d.nat==="british"},
   {id:"nat-ger",g:"nat",label:"German\nDriver",img:IMG_FLAG_GERMAN,flagImg:true,badge:"b-nat",check:d=>d.nat==="german"},
   {id:"nat-bra",g:"nat",label:"Brazilian\nDriver",img:IMG_FLAG_BRAZILIAN,flagImg:true,badge:"b-nat",check:d=>d.nat==="brazilian"},
@@ -44,7 +42,7 @@ const CATS = [
   {id:"nat-swe",g:"nat",label:"Swedish\nDriver",img:IMG_FLAG_SWEDISH,flagImg:true,badge:"b-nat",check:d=>d.nat==="swedish"},
   {id:"nat-jpn",g:"nat",label:"Japanese\nDriver",img:IMG_FLAG_JAPANESE,flagImg:true,badge:"b-nat",check:d=>d.nat==="japanese"},
   {id:"nat-sui",g:"nat",label:"Swiss\nDriver",img:IMG_FLAG_SWISS,flagImg:true,badge:"b-nat",check:d=>d.nat==="swiss"},
-  // TROPHIES
+  
   {id:"champ",g:"trophy",label:"World\nChampion",img:IMG_WILD_CHAMPIONS,flagImg:true,badge:"b-troph",check:d=>d.champ},
   {id:"multi2",g:"trophy",label:"2+ World\nTitles",img:IMG_WILD_TITLES,flagImg:true,badge:"b-troph",check:d=>d.champN>=2},
   {id:"multi3",g:"trophy",label:"3+ World\nTitles",img:IMG_WILD_TITLES,flagImg:true,badge:"b-troph",check:d=>d.champN>=3},
@@ -64,7 +62,7 @@ const CATS = [
   {id:"pp5",g:"trophy",label:"5+ Career\nPole Position",img:IMG_WILD_POLE,flagImg:true,badge:"b-troph",check:d=>d.poles>=5},
   {id:"pp10",g:"trophy",label:"10+ Career\nPole Position",img:IMG_WILD_POLE,flagImg:true,badge:"b-troph",check:d=>d.poles>=10},
   {id:"pp15",g:"trophy",label:"15+ Career\nPole Position",img:IMG_WILD_POLE,flagImg:true,badge:"b-troph",check:d=>d.poles>=15},
-  // CIRCUITS
+  
   {id:"Monte-Carlo",g:"circuit",label:"Won at\nMonte-Carlo",img:IMG_CIRC_MONACO,flagImg:true,badge:"b-circ",check:d=>(d.circuits.monte_carlo||0)>=1},
   {id:"Spa-Francorchamps",g:"circuit",label:"Won at\nSpa-Francorchamps",img:IMG_CIRC_BELGIUM,flagImg:true,badge:"b-circ",check:d=>(d.circuits.spa||0)>=1},
   {id:"Monza",g:"circuit",label:"Won at\nMonza",img:IMG_CIRC_ITALY,flagImg:true,badge:"b-circ",check:d=>(d.circuits.monza||0)>=1},
@@ -94,7 +92,7 @@ const CATS = [
   {id:"Watkins Glen",g:"circuit",label:"Won at\nWatkins Glen",img:IMG_CIRC_USA_FLAG,flagImg:true,badge:"b-circ",check:d=>(d.circuits.watkins_glen||0)>=1},
   {id:"Magny-Cours",g:"circuit",label:"Won at\nMagny-Cours",img:IMG_CIRC_FRANCE,flagImg:true,badge:"b-circ",check:d=>(d.circuits.magny_cours||0)>=1},
   {id:"Mexico",g:"circuit",label:"Won at\nMexico",img:IMG_CIRC_MEXICO,flagImg:true,badge:"b-circ",check:d=>(d.circuits.mexico||0)>=1},
-  // TEAM PRINCIPALS
+  
   {id:"Ross Brawn",g:"tp",label:"Under\nRoss Brawn",img:IMG_TP_ROSS_BRAWN,badge:"b-tp",check:d=>d.tps.includes("Ross Brawn")},
   {id:"Toto Wolff",g:"tp",label:"Under\nToto Wolff",img:IMG_TP_TOTO_WOLFF,badge:"b-tp",check:d=>d.tps.includes("Toto Wolff")},
   {id:"Christian Horner",g:"tp",label:"Under\nChristian Horner",img:IMG_TP_CHRISTIAN_HORNER,badge:"b-tp",check:d=>d.tps.includes("Christian Horner")},
@@ -112,7 +110,7 @@ const CATS = [
   {id:"Bernie Ecclestone",g:"tp",label:"Under\nBernie Ecclestone",img:IMG_TP_BERNIE_ECCLESTONE,badge:"b-tp",check:d=>d.tps.includes("Bernie Ecclestone")},
   {id:"Ken Tyrrell",g:"tp",label:"Under\nKen Tyrrell",img:IMG_TP_KEN_TYRRELL,badge:"b-tp",check:d=>d.tps.includes("Ken Tyrrell")},
   {id:"Giancarlo Minardi",g:"tp",label:"Under\nGiancarlo Minardi",img:IMG_TP_GIANCARLO_MINARDI,badge:"b-tp",check:d=>d.tps.includes("Giancarlo Minardi")},
-  // WILDCARDS
+  
   {id:"born-2000s",g:"wild",label:"Born in\nthe 2000s",img:IMG_BORN_2000S,flagImg:true,badge:"b-wild",check:d=>d.birthY>=2000},
   {id:"born-1990s",g:"wild",label:"Born in\nthe 1990s",img:IMG_BORN_1990S,flagImg:true,badge:"b-wild",check:d=>d.birthY>=1990&&d.birthY<2000},
   {id:"born-1980s",g:"wild",label:"Born in\nthe 1980s",img:IMG_BORN_1980S,flagImg:true,badge:"b-wild",check:d=>d.birthY>=1980&&d.birthY<1990},
@@ -143,7 +141,7 @@ const CATS = [
   {id:"top2t",g:"wild",label:"Raced in\nTop 2 Teams",img:IMG_WILD_TEAMS,flagImg:true,badge:"b-wild",check:d=>{const tops=["Ferrari","McLaren"];return tops.every(t=>d.teams.includes(t));}},
   {id:"wc2circ",g:"wild",label:"Wins at\n2+ Top 5 Circuits",img:IMG_WILD_CIRCUITS,flagImg:true,badge:"b-wild",check:d=>{const top5=["monza","monte_carlo","silverstone","spa","interlagos"];return top5.filter(c=>(d.circuits[c]||0)>=1).length>=2;}},
   {id:"wc3circ",g:"wild",label:"Wins at\n2+ Top 3 Circuits",img:IMG_WILD_CIRCUITS,flagImg:true,badge:"b-wild",check:d=>{const top3=["monza","monte_carlo","silverstone"];return top3.filter(c=>(d.circuits[c]||0)>=1).length>=2;}},
-  // TEAMMATE PORTRAITS
+  
   {id:"Graham Hill",g:"tm",label:"Teammate\nof Graham Hill",img:IMG_GRAHAM_HILL,badge:"b-tm",check:d=>{const n=d.name.toLowerCase();return ["innes ireland","jo bonnier","dan gurney","tony brooks","richie ginther","jackie stewart","jim clark","mario andretti","carlos reutemann","jochen rindt","wilson fittipaldi"].includes(n);}},
   {id:"Fernando Alonso",g:"tm",label:"Teammate\nof Fernando Alonso",img:IMG_ALONSO,badge:"b-tm",check:d=>{const n=d.name.toLowerCase();return ["jarno trulli","jacques villeneuve","giancarlo fisichella","lewis hamilton","romain grosjean","felipe massa","kimi räikkönen","jenson button","stoffel vandoorne","lando norris","esteban ocon","lance stroll","nelson piquet jr.","alex yoong"].includes(n);}},
   {id:"Lewis Hamilton",g:"tm",label:"Teammate\nof Lewis Hamilton",img:IMG_HAMILTON,badge:"b-tm",check:d=>{const n=d.name.toLowerCase();return ["fernando alonso","heikki kovalainen","jenson button","nico rosberg","valtteri bottas","george russell","kimi antonelli","charles leclerc"].includes(n);}},
@@ -161,7 +159,6 @@ const CATS = [
   {id:"Nigel Mansell",g:"tm",label:"Teammate\nof Nigel Mansell",img:IMG_MANSELL,badge:"b-tm",check:d=>{const n=d.name.toLowerCase();return ["mario andretti","keke rosberg","nelson piquet","alain prost","damon hill","mika häkkinen","riccardo patrese","gerhard berger","elio de angelis"].includes(n);}},
 ];
 
-// ── WIN CHECK ──────────────────────────────────────────────────────────────
 const LINES=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 function checkWin(board){
   for(const l of LINES){
@@ -173,12 +170,8 @@ function checkWin(board){
   return null;
 }
 
-// ── GRID BUILDER ────────────────────────────────────────────────────────────
-
-// Pre-compute all valid pairs (>=2 drivers) between different groups — cached
 function countValid(a,b){return DB.filter(d=>{try{return a.check(d)&&b.check(d);}catch(e){return false;}}).length;}
 
-// Bipartite matching: checks that all 9 cells can be filled with distinct drivers (>=2 per cell)
 function gridCanAssign(rows, cols){
   const cells=[];
   for(let r=0;r<rows.length;r++){
@@ -188,7 +181,7 @@ function gridCanAssign(rows, cols){
       for(let d=0;d<DB.length;d++){
         try{ if(rc.check(DB[d])&&cc.check(DB[d])) drivers.push(d); }catch(e){}
       }
-      if(drivers.length<2) return false; // each cell needs >=2 options
+      if(drivers.length<2) return false; 
       cells.push(drivers);
     }
   }
@@ -263,7 +256,7 @@ function buildGrid(){
       const rows=[CATS[r0],CATS[r1],CATS[r2]];
       const cols=[CATS[c0],CATS[c1],CATS[c2]];
 
-      // Final check: all 9 cells must support a complete distinct driver assignment
+      
       if(!gridCanAssign(rows,cols)) continue;
 
       return{rows,cols};
@@ -271,5 +264,3 @@ function buildGrid(){
   }
   return{rows:[CATS[0],CATS[21],CATS[40]],cols:[CATS[60],CATS[107],CATS[148]]};
 }
-
-// ── STATE ──────────────────────────────────────────────────────────────────
