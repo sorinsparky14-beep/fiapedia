@@ -11,6 +11,9 @@
 </head>
 <body>
 
+<!-- ══════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════ -->
 <header>
   <div class="logo-blk" id="hdr-logo" onclick="showLanding()" style="cursor:pointer;">
     <h1><span class="logo-box">MISSING</span>GRID PUZZLE</h1>
@@ -19,9 +22,12 @@
   <div id="hdr-score" style="display:none"></div>
 </header>
 
+<!-- ══════════════════════════════════════════
+     LANDING PAGE
+══════════════════════════════════════════ -->
 <div id="landing-page" style="display:none">
 
-  
+  <!-- Hero -->
   <div class="landing-hero">
     <h2 class="landing-title">
       <a href="/" class="landing-title-link"><span class="lt-box">MISSING</span>GRID PUZZLE</a>
@@ -29,7 +35,7 @@
   
   </div>
 
-  
+  <!-- CTA Buttons -->
   <div class="landing-cta">
     <button class="btn-play-random" onclick="startRandomGame()">
       <span class="bpr-icon">▶</span>
@@ -46,7 +52,7 @@
     </button>
   </div>
 
-  
+  <!-- How to Play (collapsible) -->
   <div class="htp-section" id="htp-section" style="display:none;">
     <div class="htp-steps">
       <div class="htp-step">
@@ -79,12 +85,15 @@
 
   
 
-</div>
+</div><!-- /landing-page -->
 
+<!-- ══════════════════════════════════════════
+     EDITOR PANEL (Custom mode)
+══════════════════════════════════════════ -->
 <div id="editor-panel" style="display:none">
   <div class="editor-inner">
 
-    
+    <!-- Editor top nav -->
     <div class="editor-topbar">
       <a class="editor-logo" onclick="showLanding()" style="cursor:pointer;">
         <span class="logo-box">MISSING</span>GRID PUZZLE
@@ -100,7 +109,7 @@
       <div class="tcontent active" id="tab-race">
         <div class="race-selector-wrap">
           <label>Choose a race from the database</label>
-          <select class="race-select" id="race-select"></select>
+          <div id="race-select-wrap"></div>
         </div>
         <p class="hint" style="margin-bottom:14px;">— or fill in manually below —</p>
         <div class="frow">
@@ -137,6 +146,9 @@
   </div>
 </div>
 
+<!-- ══════════════════════════════════════════
+     GAME AREA
+══════════════════════════════════════════ -->
 <div id="game-area" style="display:none">
   <div class="pool-bar">
     <div class="pool-lbl">Available drivers — drag or tap, then click a slot</div>
@@ -163,10 +175,13 @@
   </div>
 </div>
 
+<!-- ══════════════════════════════════════════
+     RESULT OVERLAY
+══════════════════════════════════════════ -->
 <div id="result-overlay">
   <div class="res-card">
 
-    
+    <!-- LEFT PANEL: scor + stats -->
     <div class="res-left">
       <div class="res-emoji" id="res-emoji">🏆</div>
       <div class="res-title" id="res-title">Perfect!</div>
@@ -174,7 +189,7 @@
       <div class="res-hint-penalty" id="res-hint-penalty" style="display:none"></div>
 
       <div class="res-actions">
-        
+        <!-- Random mode -->
         <div id="res-random-btns" style="display:none">
           <button class="btn btn-red" onclick="startRandomGame(); document.getElementById('result-overlay').classList.remove('show');">
             🎲 Another Race
@@ -183,7 +198,7 @@
             Menu
           </button>
         </div>
-        
+        <!-- Custom mode -->
         <div id="res-custom-btns" style="display:none">
           <button class="btn btn-red" onclick="resetGame(); document.getElementById('result-overlay').classList.remove('show');">
             ↺ Play Again
@@ -198,7 +213,7 @@
       </div>
     </div>
 
-    
+    <!-- RIGHT PANEL: poveste -->
     <div class="res-right" id="res-story" style="display:none">
       <div class="res-story-label">Race Story</div>
       <div class="res-story-text" id="res-story-text"></div>
@@ -208,6 +223,7 @@
   </div>
 </div>
 
+<!-- AD MODAL -->
 <div id="ad-modal">
   <div class="ad-card">
     <div class="ad-label">Advertisement</div>
