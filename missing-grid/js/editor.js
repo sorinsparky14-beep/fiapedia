@@ -22,8 +22,16 @@ function buildRaceSelector() {
   if (!wrap) return;
   if (typeof RACES === 'undefined' || !RACES.length) return;
 
+  function flagImg(emoji) {
+    const pts = [...emoji].map(c => c.codePointAt(0));
+    if (pts.length === 2 && pts[0] >= 0x1F1E6 && pts[0] <= 0x1F1FF) {
+      const iso = pts.map(p => String.fromCharCode(p - 0x1F1A5)).join('').toLowerCase();
+      return '<img class="rs-flag-img" src="https://flagcdn.com/20x15/' + iso + '.png" width="20" height="15" alt="' + iso.toUpperCase() + '" onerror="this.style.display='none'">';
+    }
+    return '<span class="rs-flag-emoji">' + emoji + '</span>';
+  }
+
   let open = false;
-  let selected = null;
 
   const btn = document.createElement('div');
   btn.className = 'rs-btn';
@@ -36,8 +44,7 @@ function buildRaceSelector() {
   placeholder.className = 'rs-option rs-placeholder';
   placeholder.textContent = '— Choose a race —';
   placeholder.addEventListener('click', () => {
-    selected = null;
-    btn.querySelector('.rs-label').textContent = '— Choose a race —';
+    btn.querySelector('.rs-label').innerHTML = '— Choose a race —';
     document.getElementById('in-name').value = '';
     document.getElementById('in-year').value = '';
     renderDriversTable([]);
@@ -50,10 +57,9 @@ function buildRaceSelector() {
   RACES.forEach(r => {
     const item = document.createElement('div');
     item.className = 'rs-option';
-    item.innerHTML = `<span class="rs-flag">${r.flag}</span><span class="rs-name">${r.name} (${r.year})</span>`;
+    item.innerHTML = flagImg(r.flag) + '<span class="rs-name">' + r.name + ' (' + r.year + ')</span>';
     item.addEventListener('click', () => {
-      selected = r;
-      btn.querySelector('.rs-label').innerHTML = `<span class="rs-flag">${r.flag}</span><span class="rs-name">${r.name} (${r.year})</span>`;
+      btn.querySelector('.rs-label').innerHTML = flagImg(r.flag) + '<span class="rs-name">' + r.name + ' (' + r.year + ')</span>';
       loadRace(r);
       closeList();
     });
