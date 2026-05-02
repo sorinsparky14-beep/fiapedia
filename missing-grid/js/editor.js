@@ -18,32 +18,66 @@ document.querySelectorAll('.etab').forEach(tab => {
 });
 
 function buildRaceSelector() {
-  const sel = document.getElementById('race-select');
-  if (!sel) return;
-  
-  sel.innerHTML = '<option value="">— Choose a race —</option>';
+  const wrap = document.getElementById('race-select-wrap');
+  if (!wrap) return;
   if (typeof RACES === 'undefined' || !RACES.length) return;
-  RACES.forEach(r => {
-    const opt = document.createElement('option');
-    opt.value = r.id;
-    opt.textContent = `${r.flag}  ${r.name} (${r.year})`;
-    sel.appendChild(opt);
+
+  let open = false;
+  let selected = null;
+
+  const btn = document.createElement('div');
+  btn.className = 'rs-btn';
+  btn.innerHTML = '<span class="rs-label">— Choose a race —</span><span class="rs-arrow">▾</span>';
+
+  const list = document.createElement('div');
+  list.className = 'rs-list';
+
+  const placeholder = document.createElement('div');
+  placeholder.className = 'rs-option rs-placeholder';
+  placeholder.textContent = '— Choose a race —';
+  placeholder.addEventListener('click', () => {
+    selected = null;
+    btn.querySelector('.rs-label').textContent = '— Choose a race —';
+    document.getElementById('in-name').value = '';
+    document.getElementById('in-year').value = '';
+    renderDriversTable([]);
+    G.hidden = new Set();
+    renderHiddenChips(0, []);
+    closeList();
   });
-  
-  if (sel._changeHandler) sel.removeEventListener('change', sel._changeHandler);
-  sel._changeHandler = () => {
-    if (!sel.value) {
-      document.getElementById('in-name').value = '';
-      document.getElementById('in-year').value = '';
-      renderDriversTable([]);
-      G.hidden = new Set();
-      renderHiddenChips(0, []);
-      return;
-    }
-    const race = RACES.find(r => r.id === sel.value);
-    if (race) loadRace(race);
-  };
-  sel.addEventListener('change', sel._changeHandler);
+  list.appendChild(placeholder);
+
+  RACES.forEach(r => {
+    const item = document.createElement('div');
+    item.className = 'rs-option';
+    item.innerHTML = `<span class="rs-flag">${r.flag}</span><span class="rs-name">${r.name} (${r.year})</span>`;
+    item.addEventListener('click', () => {
+      selected = r;
+      btn.querySelector('.rs-label').innerHTML = `<span class="rs-flag">${r.flag}</span><span class="rs-name">${r.name} (${r.year})</span>`;
+      loadRace(r);
+      closeList();
+    });
+    list.appendChild(item);
+  });
+
+  function closeList() {
+    open = false;
+    list.classList.remove('rs-open');
+    btn.classList.remove('rs-active');
+  }
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    open = !open;
+    list.classList.toggle('rs-open', open);
+    btn.classList.toggle('rs-active', open);
+  });
+
+  document.addEventListener('click', () => { if (open) closeList(); }, { passive: true });
+
+  wrap.innerHTML = '';
+  wrap.appendChild(btn);
+  wrap.appendChild(list);
 }
 
 function loadRace(race) {
