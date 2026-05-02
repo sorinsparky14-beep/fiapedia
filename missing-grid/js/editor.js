@@ -27,12 +27,22 @@ function buildRaceSelector() {
     const pts = [...emoji].map(c => c.codePointAt(0));
     if (pts.length === 2 && pts[0] >= 0x1F1E6 && pts[0] <= 0x1F1FF) {
       const iso = pts.map(p => String.fromCharCode(p - 0x1F1A5)).join('').toLowerCase();
-      return '<img class="rs-flag-img" src="https://flagcdn.com/20x15/' + iso + '.png" width="20" height="15" alt="' + iso.toUpperCase() + '" onerror="this.style.display='none'">';
+      const img = document.createElement('img');
+      img.className = 'rs-flag-img';
+      img.src = 'https://flagcdn.com/20x15/' + iso + '.png';
+      img.width = 20;
+      img.height = 15;
+      img.alt = iso.toUpperCase();
+      img.onerror = function(){ this.hidden = true; };
+      return img.outerHTML;
     }
-    return '<span class="rs-flag-emoji">' + emoji + '</span>';
+    const sp = document.createElement('span');
+    sp.className = 'rs-flag-emoji';
+    sp.textContent = emoji;
+    return sp.outerHTML;
   }
 
-  let open = false;
+    let open = false;
 
   const btn = document.createElement('div');
   btn.className = 'rs-btn';
