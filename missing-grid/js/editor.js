@@ -19,6 +19,7 @@ document.querySelectorAll('.etab').forEach(tab => {
 
 function buildRaceSelector() {
   const wrap = document.getElementById('race-select-wrap');
+  const hiddenSel = document.getElementById('race-select');
   if (!wrap) return;
   if (typeof RACES === 'undefined' || !RACES.length) return;
 
@@ -45,6 +46,7 @@ function buildRaceSelector() {
   placeholder.textContent = '— Choose a race —';
   placeholder.addEventListener('click', () => {
     btn.querySelector('.rs-label').innerHTML = '— Choose a race —';
+    if (hiddenSel) hiddenSel.value = '';
     document.getElementById('in-name').value = '';
     document.getElementById('in-year').value = '';
     renderDriversTable([]);
@@ -60,6 +62,7 @@ function buildRaceSelector() {
     item.innerHTML = flagImg(r.flag) + '<span class="rs-name">' + r.name + ' (' + r.year + ')</span>';
     item.addEventListener('click', () => {
       btn.querySelector('.rs-label').innerHTML = flagImg(r.flag) + '<span class="rs-name">' + r.name + ' (' + r.year + ')</span>';
+      if (hiddenSel) hiddenSel.value = r.id;
       loadRace(r);
       closeList();
     });
